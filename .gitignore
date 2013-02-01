@@ -4,3 +4,10 @@
 *.jar
 *.war
 *.ear
+
+# Eclipse 
+.settings
+.project
+.classpath
+.springBeans
+
