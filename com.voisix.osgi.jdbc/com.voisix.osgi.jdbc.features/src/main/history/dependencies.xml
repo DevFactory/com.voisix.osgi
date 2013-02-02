@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="com.voisix.osgi.jdbc.features-1.0.0-SNAPSHOT">
+    <feature>
+        <bundle>mvn:com.mchange.c3p0/com.springsource.com.mchange.v2.c3p0/0.9.1.2</bundle>
+        <bundle>mvn:com.voisix.osgi.jdbc/com.voisix.osgi.jdbc.factory/1.0.0-SNAPSHOT</bundle>
+        <bundle>mvn:com.voisix.osgi.jdbc/com.voisix.osgi.jdbc.fragments.c3p0/1.0.0-SNAPSHOT</bundle>
+        <bundle>mvn:com.voisix.osgi.jdbc/com.voisix.osgi.jdbc.fragments.spring/1.0.0-SNAPSHOT</bundle>
+        <bundle>mvn:mysql/mysql-connector-java/5.1.18</bundle>
+    </feature>
+</features>

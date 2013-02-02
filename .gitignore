@@ -10,4 +10,5 @@
 .project
 .classpath
 .springBeans
+target
 
