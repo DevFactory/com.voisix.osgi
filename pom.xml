@@ -84,6 +84,14 @@
 
 	<repositories>
 		<repository>
+			<id>apache-snapshots</id>
+			<name>Apache Snapshots</name>
+			<url>http://repository.apache.org/snapshots/</url>
+			<snapshots>
+				<enabled/>
+			</snapshots>
+		</repository>
+		<repository>
 			<id>ops4j-snapshots</id>
 			<name>Ops4j Snapshots</name>
 			<url>https://oss.sonatype.org/content/repositories/ops4j-snapshots/</url>
