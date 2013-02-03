@@ -40,12 +40,15 @@
 						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>com.voisix.osgi.jdbc.factory*;version=${project.version}</Export-Package>
 						<Import-Package>
-							com.mysql.jdbc; resolution:="optional",
+							com.mysql.jdbc; resolution:="optional",							
 							org.springframework.jdbc.datasource; resolution:="optional",
 							com.mchange.v2.c3p0; resolution:="optional",
+							org.apache.commons.dbcp; resolution:="optional",
+							org.apache.commons.pool; resolution:="optional",
 							com.mysql.jdbc.integration.c3p0; resolution:="optional",
 							*
-						</Import-Package>						
+						</Import-Package>
+						<Spring-Context>META-INF/spring/*;publish-context:=false</Spring-Context>
 					</instructions>
 				</configuration>
 			</plugin>
@@ -66,10 +69,15 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.osgi</groupId>
+			<artifactId>spring-osgi-core</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.aries.blueprint</groupId>
 			<artifactId>org.apache.aries.blueprint.annotation.api</artifactId>

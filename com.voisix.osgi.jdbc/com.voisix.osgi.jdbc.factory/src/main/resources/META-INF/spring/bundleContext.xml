@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:osgi-compendium="http://www.springframework.org/schema/osgi-compendium"
+	xsi:schemaLocation="http://www.springframework.org/schema/osgi-compendium http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium-1.2.xsd
+		http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="dataSourceManagedServiceFactory" class="com.voisix.osgi.jdbc.factory.DataSourceManagedServiceFactory"/>
+	
+	<osgi:service ref="dataSourceManagedServiceFactory" interface="org.osgi.service.cm.ManagedServiceFactory">		
+		<osgi:service-properties>
+			<entry key="service.pid" value="javax.sql.DataSource" />
+		</osgi:service-properties>
+	</osgi:service>
+	
+</beans>

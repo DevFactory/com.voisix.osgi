@@ -74,23 +74,42 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>com.mchange.c3p0</groupId>
 			<artifactId>com.springsource.com.mchange.v2.c3p0</artifactId>
 			<version>${c3p0.version}</version>
-		</dependency>		
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.servicemix.bundles</groupId>
+			<artifactId>org.apache.servicemix.bundles.commons-pool</artifactId>
+			<version>1.5.4_4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.servicemix.bundles</groupId>
+			<artifactId>org.apache.servicemix.bundles.commons-dbcp</artifactId>
+			<version>1.4_3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.voisix.osgi.jdbc</groupId>
 			<artifactId>com.voisix.osgi.jdbc.factory</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.voisix.osgi.jdbc</groupId>
+			<groupId>com.voisix.osgi.jdbc.fragments</groupId>
 			<artifactId>com.voisix.osgi.jdbc.fragments.c3p0</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.voisix.osgi.jdbc</groupId>
+			<groupId>com.voisix.osgi.jdbc.fragments</groupId>
 			<artifactId>com.voisix.osgi.jdbc.fragments.spring</artifactId>
 			<version>${project.version}</version>
 		</dependency>

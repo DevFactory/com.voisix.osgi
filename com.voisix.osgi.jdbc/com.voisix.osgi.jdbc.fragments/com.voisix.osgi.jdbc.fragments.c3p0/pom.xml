@@ -8,6 +8,7 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	
+	<groupId>com.voisix.osgi.jdbc.fragments</groupId>
 	<artifactId>com.voisix.osgi.jdbc.fragments.c3p0</artifactId>
 	<packaging>bundle</packaging>
 	
