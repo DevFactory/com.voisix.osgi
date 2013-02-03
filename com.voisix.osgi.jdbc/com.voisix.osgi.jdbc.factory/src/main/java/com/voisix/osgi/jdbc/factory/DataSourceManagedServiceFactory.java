@@ -89,9 +89,9 @@ public class DataSourceManagedServiceFactory implements ManagedServiceFactory, B
 	}
 	
 	private final DataSource updateDataSourceService(String pid, Dictionary<String, ?> properties) throws ClassNotFoundException {		
-		final ServiceRegistration<DataSource> dataSourceServiceRegistration = serviceRegistrationMap.get(pid);
-		final ServiceReference<DataSource> dataSourceServiceReference = dataSourceServiceRegistration.getReference();
-		final DataSource dataSource 	= context.getService(dataSourceServiceReference);			
+		final ServiceRegistration<DataSource> serviceRegistration = serviceRegistrationMap.get(pid);
+		final ServiceReference<DataSource> serviceReference = serviceRegistration.getReference();
+		final DataSource dataSource 	= context.getService(serviceReference);			
 		final BeanWrapper beanWrapper 	= PropertyAccessorFactory.forBeanPropertyAccess(dataSource);
 		final MutablePropertyValues propertyValues = new MutablePropertyValues();
 		for (String key : Collections.list(properties.keys())) {				
@@ -104,7 +104,8 @@ public class DataSourceManagedServiceFactory implements ManagedServiceFactory, B
 			propertyValues.getPropertyValue(DRIVER_CLASS).setConvertedValue(driverClass);
 		}
 		
-		beanWrapper.setPropertyValues(propertyValues, true);		
+		beanWrapper.setPropertyValues(propertyValues, true);
+		serviceRegistration.setProperties(properties);
 		logger.info("Updated: " + dataSource.getClass().getName() + properties);
 		return dataSource;
 	}
