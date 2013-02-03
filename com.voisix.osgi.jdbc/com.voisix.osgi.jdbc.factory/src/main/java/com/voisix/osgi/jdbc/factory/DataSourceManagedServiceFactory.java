@@ -23,6 +23,8 @@ import org.springframework.osgi.context.BundleContextAware;
 public class DataSourceManagedServiceFactory implements ManagedServiceFactory, BundleContextAware {
 	
 	private final static String FACTORY_CLASS 	= "factoryClass";
+	private final static String DRIVER_CLASS	= "driverClass";
+	private final static String SPRING_JDBC_FACTORY_CLASS_NAME = "org.springframework.jdbc.datasource.SimpleDriverDataSource";
 		
 	private final Log logger = LogFactory.getLog(getClass());
 	private final Map<String, ServiceRegistration<DataSource>> serviceRegistrationMap = new HashMap<String, ServiceRegistration<DataSource>>(2);
@@ -72,6 +74,13 @@ public class DataSourceManagedServiceFactory implements ManagedServiceFactory, B
 		for (String key : Collections.list(properties.keys())) {				
 			propertyValues.addPropertyValue(key, properties.get(key));				
 		}
+		
+		if (SPRING_JDBC_FACTORY_CLASS_NAME.equals(factoryClassName)) {
+			final String drvierClassName 	= (String) properties.get(DRIVER_CLASS);
+			final Class<?> driverClass 		= Class.forName(drvierClassName);
+			propertyValues.getPropertyValue(DRIVER_CLASS).setConvertedValue(driverClass);
+		}
+		
 		beanWrapper.setPropertyValues(propertyValues, true);
 		ServiceRegistration<DataSource> serviceRegistration = context.registerService(DataSource.class, dataSource, properties);
 		serviceRegistrationMap.put(pid, serviceRegistration);
@@ -88,6 +97,13 @@ public class DataSourceManagedServiceFactory implements ManagedServiceFactory, B
 		for (String key : Collections.list(properties.keys())) {				
 			propertyValues.addPropertyValue(key, properties.get(key));				
 		}
+		
+		if (SPRING_JDBC_FACTORY_CLASS_NAME.equals(dataSource.getClass().getName())) {
+			final String drvierClassName 	= (String) properties.get(DRIVER_CLASS);
+			final Class<?> driverClass 		= Class.forName(drvierClassName);
+			propertyValues.getPropertyValue(DRIVER_CLASS).setConvertedValue(driverClass);
+		}
+		
 		beanWrapper.setPropertyValues(propertyValues, true);		
 		logger.info("Updated: " + dataSource.getClass().getName() + properties);
 		return dataSource;
@@ -98,7 +114,7 @@ public class DataSourceManagedServiceFactory implements ManagedServiceFactory, B
 		final ServiceReference<DataSource> serviceReference = serviceRegistration.getReference();			
 		final DataSource dataSource = context.getService(serviceReference);
 		final String className = dataSource.getClass().getName();
-		context.ungetService(serviceReference);
+		serviceRegistration.unregister();
 		serviceRegistrationMap.remove(pid);
 		logger.info("Deleted: " + className + "{pid=" + pid + "}");
 	}
