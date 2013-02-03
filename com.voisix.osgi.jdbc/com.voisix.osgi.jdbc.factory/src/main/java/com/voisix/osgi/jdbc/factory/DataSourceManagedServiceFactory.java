@@ -24,7 +24,6 @@ import org.springframework.osgi.context.BundleContextAware;
 public class DataSourceManagedServiceFactory implements ManagedServiceFactory, BundleContextAware {
 	
 	private final static String FACTORY_CLASS 	= "factoryClass";
-	private final static String DRIVER_CLASS	= "driverClass";
 		
 	private final Log logger = LogFactory.getLog(getClass());
 	private final Map<String, ServiceRegistration<DataSource>> serviceRegistrationMap = new HashMap<String, ServiceRegistration<DataSource>>(2);
@@ -82,8 +81,7 @@ public class DataSourceManagedServiceFactory implements ManagedServiceFactory, B
 		return dataSource;
 	}
 	
-	private final DataSource updateDataSourceService(String pid, Dictionary<String, ?> properties) throws ClassNotFoundException {
-		Class.forName((String) properties.get(DRIVER_CLASS));
+	private final DataSource updateDataSourceService(String pid, Dictionary<String, ?> properties) throws ClassNotFoundException {		
 		final ServiceRegistration<DataSource> dataSourceServiceRegistration = serviceRegistrationMap.get(pid);
 		final ServiceReference<DataSource> dataSourceServiceReference = dataSourceServiceRegistration.getReference();
 		final DataSource dataSource 	= context.getService(dataSourceServiceReference);			
@@ -92,7 +90,7 @@ public class DataSourceManagedServiceFactory implements ManagedServiceFactory, B
 		for (String key : Collections.list(properties.keys())) {				
 			propertyValues.addPropertyValue(key, properties.get(key));				
 		}
-		beanWrapper.setPropertyValues(propertyValues, true);
+		beanWrapper.setPropertyValues(propertyValues, true);		
 		logger.info("Updated: " + dataSource.getClass().getName() + properties);
 		return dataSource;
 	}
