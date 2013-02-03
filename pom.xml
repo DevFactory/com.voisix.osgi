@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<!-- Licensed to the Apache Software Foundation (ASF) under one or more 
 		contributor license agreements. See the NOTICE file distributed with this 
@@ -79,7 +79,8 @@
 
 	<modules>
 		<module>com.voisix.osgi.jdbc</module>
-	</modules>
+    <module>com.voisix.osgi.jmx</module>
+  </modules>
 
 
 	<repositories>
@@ -89,7 +90,7 @@
 			<name>Apache Snapshots</name>
 			<url>http://repository.apache.org/snapshots/</url>
 			<snapshots>
-				<enabled />
+				<enabled/>
 			</snapshots>
 		</repository>
 		
@@ -98,7 +99,7 @@
 			<name>Ops4j Snapshots</name>
 			<url>https://oss.sonatype.org/content/repositories/ops4j-snapshots/</url>
 			<snapshots>
-				<enabled />
+				<enabled/>
 			</snapshots>
 		</repository>
 		
@@ -113,7 +114,12 @@
 			<name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
 			<url>http://repository.springsource.com/maven/bundles/external</url>
 		</repository>
-
+				
+		<repository>
+			<id>restlet</id>
+			<name>Restlet repository</name>
+			<url>http://maven.restlet.org</url>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -122,7 +128,7 @@
 			<name>Apache Snapshots</name>
 			<url>http://repository.apache.org/snapshots/</url>
 			<snapshots>
-				<enabled />
+				<enabled/>
 			</snapshots>
 		</pluginRepository>
 		<pluginRepository>
@@ -130,7 +136,7 @@
 			<name>Ops4j Snapshots</name>
 			<url>https://oss.sonatype.org/content/repositories/ops4j-snapshots/</url>
 			<snapshots>
-				<enabled />
+				<enabled/>
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>

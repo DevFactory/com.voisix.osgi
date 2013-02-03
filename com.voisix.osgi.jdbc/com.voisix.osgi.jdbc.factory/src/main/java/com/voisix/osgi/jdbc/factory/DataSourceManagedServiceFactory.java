@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.apache.aries.blueprint.annotation.Inject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.framework.BundleContext;
@@ -28,7 +27,6 @@ public class DataSourceManagedServiceFactory implements ManagedServiceFactory, B
 	private final Log logger = LogFactory.getLog(getClass());
 	private final Map<String, ServiceRegistration<DataSource>> serviceRegistrationMap = new HashMap<String, ServiceRegistration<DataSource>>(2);
 	
-	@Inject
     private BundleContext context;
 
 	@Override
