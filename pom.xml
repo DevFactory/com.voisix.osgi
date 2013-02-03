@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<!-- Licensed to the Apache Software Foundation (ASF) under one or more 
 		contributor license agreements. See the NOTICE file distributed with this 
@@ -79,30 +80,30 @@
 
 	<modules>
 		<module>com.voisix.osgi.jdbc</module>
-    <module>com.voisix.osgi.jmx</module>
-  </modules>
+		<module>com.voisix.osgi.jmx</module>
+	</modules>
 
 
 	<repositories>
-	
+
 		<repository>
 			<id>apache-snapshots</id>
 			<name>Apache Snapshots</name>
 			<url>http://repository.apache.org/snapshots/</url>
 			<snapshots>
-				<enabled/>
+				<enabled />
 			</snapshots>
 		</repository>
-		
+
 		<repository>
 			<id>ops4j-snapshots</id>
 			<name>Ops4j Snapshots</name>
 			<url>https://oss.sonatype.org/content/repositories/ops4j-snapshots/</url>
 			<snapshots>
-				<enabled/>
+				<enabled />
 			</snapshots>
 		</repository>
-		
+
 		<repository>
 			<id>com.springsource.repository.bundles.release</id>
 			<name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
@@ -114,7 +115,7 @@
 			<name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
 			<url>http://repository.springsource.com/maven/bundles/external</url>
 		</repository>
-				
+
 		<repository>
 			<id>restlet</id>
 			<name>Restlet repository</name>
@@ -128,7 +129,7 @@
 			<name>Apache Snapshots</name>
 			<url>http://repository.apache.org/snapshots/</url>
 			<snapshots>
-				<enabled/>
+				<enabled />
 			</snapshots>
 		</pluginRepository>
 		<pluginRepository>
@@ -136,8 +137,23 @@
 			<name>Ops4j Snapshots</name>
 			<url>https://oss.sonatype.org/content/repositories/ops4j-snapshots/</url>
 			<snapshots>
-				<enabled/>
+				<enabled />
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
+
+	<distributionManagement>
+		<repository>
+			<id>releases.voisix.com</id>
+			<name>Voisix Release Distribution Repository</name>
+			<url>http://nexus.voisix.com/content/repositories/releases/</url>
+		</repository>
+		
+		<snapshotRepository>
+			<id>snapshots.voisix.com</id>
+			<name>Voisix Snapshot Distribution Repository</name>
+			<url>http://nexus.voisix.com/content/repositories/snapshots/</url>
+		</snapshotRepository>		
+	</distributionManagement>
+
 </project>
