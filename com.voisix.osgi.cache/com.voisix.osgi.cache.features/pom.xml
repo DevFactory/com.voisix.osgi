@@ -20,7 +20,7 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.karaf.tooling</groupId>
-				<artifactId>karaf-maven-plugin</artifactId>				
+				<artifactId>karaf-maven-plugin</artifactId>
 				<configuration>
 					<startLevel>80</startLevel>
 					<aggregateFeatures>true</aggregateFeatures>
@@ -41,21 +41,27 @@
 						<phase>generate-resources</phase>
 					</execution>
 				</executions>
-			</plugin>			
-		</plugins>		
+			</plugin>
+		</plugins>
 	</build>
-	
+
 	<dependencies>
 		<dependency>
-			<groupId>org.apache.servicemix.bundles</groupId>
-			<artifactId>org.apache.servicemix.bundles.ehcache</artifactId>
-			<version>2.6.2_1</version>
+			<groupId>com.voisix.osgi</groupId>
+			<artifactId>com.voisix.osgi.common</artifactId>
+			<version>${project.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.voisix.osgi.cache</groupId>
 			<artifactId>com.voisix.osgi.cache.factory</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.servicemix.bundles</groupId>
+			<artifactId>org.apache.servicemix.bundles.ehcache</artifactId>
+			<version>2.6.2_1</version>
 		</dependency>
 	</dependencies>
 </project>

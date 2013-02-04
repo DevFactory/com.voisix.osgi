@@ -39,6 +39,7 @@
 						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>com.voisix.osgi.jdbc.factory*;version=${project.version}</Export-Package>
 						<Import-Package>
+							org.osgi.service.cm,
 							com.mysql.jdbc; resolution:="optional",							
 							org.springframework.jdbc.datasource; resolution:="optional",
 							com.mchange.v2.c3p0; resolution:="optional",
@@ -56,6 +57,12 @@
 
 	<dependencies>
 		<dependency>
+    		<groupId>com.voisix.osgi</groupId>
+    		<artifactId>com.voisix.osgi.common</artifactId>
+    		<version>${project.version}</version>
+    	</dependency>
+    	
+		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.core</artifactId>
 			<scope>provided</scope>
@@ -70,6 +77,13 @@
 		<dependency>
 			<groupId>org.springframework.osgi</groupId>
 			<artifactId>spring-osgi-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.ops4j.pax.logging</groupId>
+			<artifactId>pax-logging-api</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>

@@ -2,6 +2,6 @@
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="com.voisix.osgi.cache.features">
     <feature>
         <bundle>mvn:com.voisix.osgi.cache/com.voisix.osgi.cache.factory/1.0.0-SNAPSHOT</bundle>
-        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.ehcache/2.6.2_1</bundle>
+        <bundle>mvn:com.voisix.osgi/com.voisix.osgi.common/1.0.0-SNAPSHOT</bundle>
     </feature>
 </features>

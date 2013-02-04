@@ -59,6 +59,32 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.voisix.osgi</groupId>
+			<artifactId>com.voisix.osgi.common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.voisix.osgi.jdbc</groupId>
+			<artifactId>com.voisix.osgi.jdbc.factory</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.voisix.osgi.jdbc.fragments</groupId>
+			<artifactId>com.voisix.osgi.jdbc.fragments.c3p0</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- 
+		<dependency>
+			<groupId>com.voisix.osgi.jdbc.fragments</groupId>
+			<artifactId>com.voisix.osgi.jdbc.fragments.spring</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		 -->
+		
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
@@ -86,21 +112,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 		</dependency>
-		
-		<dependency>
-			<groupId>com.voisix.osgi.jdbc</groupId>
-			<artifactId>com.voisix.osgi.jdbc.factory</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.voisix.osgi.jdbc.fragments</groupId>
-			<artifactId>com.voisix.osgi.jdbc.fragments.c3p0</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.voisix.osgi.jdbc.fragments</groupId>
-			<artifactId>com.voisix.osgi.jdbc.fragments.spring</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+				
 	</dependencies>
 </project>

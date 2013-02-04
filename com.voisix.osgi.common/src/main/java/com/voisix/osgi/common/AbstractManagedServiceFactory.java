@@ -29,9 +29,9 @@ public abstract class AbstractManagedServiceFactory implements BundleContextAwar
 	@Override
 	public void updated(String pid, Dictionary<String, ?> properties) throws ConfigurationException {
 		if (serviceRegistrationMap.containsKey(pid)) {
-			createService(pid, properties);
+			updateService(pid, properties);			
 		} else {
-			updateService(pid, properties);
+			createService(pid, properties);
 		}
 	}
 
