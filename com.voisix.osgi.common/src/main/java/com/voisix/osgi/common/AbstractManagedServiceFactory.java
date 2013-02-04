@@ -4,8 +4,6 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.sql.DataSource;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.framework.BundleContext;
@@ -17,7 +15,7 @@ import org.springframework.osgi.context.BundleContextAware;
 public abstract class AbstractManagedServiceFactory implements BundleContextAware, ManagedServiceFactory {
 	
 	protected final Log logger = LogFactory.getLog(getClass());
-	protected final Map<String, ServiceRegistration<DataSource>> serviceRegistrationMap = new HashMap<String, ServiceRegistration<DataSource>>(2);
+	protected final Map<String, ServiceRegistration<?>> serviceRegistrationMap = new HashMap<String, ServiceRegistration<?>>(2);
 	
     protected BundleContext bundleContext;
 
