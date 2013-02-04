@@ -26,7 +26,6 @@
 	<packaging>bundle</packaging>
 
 	<name>JDBC DataSource Managed Service Factory</name>
-	<description></description>
 
 	<build>
 		<plugins>

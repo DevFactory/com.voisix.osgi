@@ -39,7 +39,7 @@ public class DataSourceManagedServiceFactory implements ManagedServiceFactory, B
 	@Override
 	public void deleted(String pid) {
 		if (serviceRegistrationMap.containsKey(pid)) {
-			deleteDataSourceService(pid);
+			deleteService(pid);
 		}		
 	}
 	
@@ -53,9 +53,9 @@ public class DataSourceManagedServiceFactory implements ManagedServiceFactory, B
 		if (null!=properties.get(FACTORY_CLASS)) {
 			try {					
 				if (serviceRegistrationMap.containsKey(pid)) {
-					updateDataSourceService(pid, properties);
+					updateService(pid, properties);
 				} else {
-					createDataSourceService(pid, properties);
+					createService(pid, properties);
 				}
 			} catch (ClassNotFoundException e) {
 				logger.error(e.getMessage(), e);
@@ -65,7 +65,7 @@ public class DataSourceManagedServiceFactory implements ManagedServiceFactory, B
 		}
 	}
 
-	private final DataSource createDataSourceService(String pid, Dictionary<String, ?> properties) throws ClassNotFoundException {
+	private final DataSource createService(String pid, Dictionary<String, ?> properties) throws ClassNotFoundException {
 		final String factoryClassName	= (String) properties.get(FACTORY_CLASS);
 		final Class<?> factory			= Class.forName(factoryClassName);
 		final DataSource dataSource 	= (DataSource) BeanUtils.instantiate(factory);
@@ -88,7 +88,7 @@ public class DataSourceManagedServiceFactory implements ManagedServiceFactory, B
 		return dataSource;
 	}
 	
-	private final DataSource updateDataSourceService(String pid, Dictionary<String, ?> properties) throws ClassNotFoundException {		
+	private final DataSource updateService(String pid, Dictionary<String, ?> properties) throws ClassNotFoundException {		
 		final ServiceRegistration<DataSource> serviceRegistration = serviceRegistrationMap.get(pid);
 		final ServiceReference<DataSource> serviceReference = serviceRegistration.getReference();
 		final DataSource dataSource 	= context.getService(serviceReference);			
@@ -110,7 +110,7 @@ public class DataSourceManagedServiceFactory implements ManagedServiceFactory, B
 		return dataSource;
 	}
 	
-	private final void deleteDataSourceService(String pid) {
+	private final void deleteService(String pid) {
 		final ServiceRegistration<DataSource> serviceRegistration = serviceRegistrationMap.get(pid);
 		final ServiceReference<DataSource> serviceReference = serviceRegistration.getReference();			
 		final DataSource dataSource = context.getService(serviceReference);

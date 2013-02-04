@@ -25,20 +25,9 @@
 	<artifactId>com.voisix.osgi.jdbc.features</artifactId>
 	<packaging>pom</packaging>
 
-	<name>JDBC Features</name>
-	<description></description>
+	<name>JDBC Features Assembly</name>
 
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.karaf.tooling</groupId>
-					<artifactId>karaf-maven-plugin</artifactId>
-					<version>3.0.0-SNAPSHOT</version>
-					<extensions>true</extensions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+	<build>		
 		<plugins>
 			<plugin>
 				<groupId>org.apache.karaf.tooling</groupId>
@@ -65,7 +54,7 @@
 					</execution>
 				</executions>
 			</plugin>
-		</plugins>
+		</plugins>		
 	</build>
 
 	<dependencies>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.voisix.osgi</groupId>
+		<artifactId>com.voisix.osgi.cache</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.voisix.osgi.cache</groupId>
+	<artifactId>com.voisix.osgi.cache.features</artifactId>
+	<packaging>pom</packaging>
+
+	<name>Cache Features Assembly</name>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.karaf.tooling</groupId>
+				<artifactId>karaf-maven-plugin</artifactId>				
+				<configuration>
+					<startLevel>80</startLevel>
+					<aggregateFeatures>true</aggregateFeatures>
+					<resolver>(obr)</resolver>
+					<checkDependencyChange>true</checkDependencyChange>
+					<failOnDependencyChange>false</failOnDependencyChange>
+					<logDependencyChanges>true</logDependencyChanges>
+					<overwriteChangedDependencies>true</overwriteChangedDependencies>
+					<includeTransitiveDependency>false</includeTransitiveDependency>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>generate-feature</id>
+						<goals>
+							<goal>features-generate-descriptor</goal>
+						</goals>
+						<phase>generate-resources</phase>
+					</execution>
+				</executions>
+			</plugin>			
+		</plugins>		
+	</build>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.servicemix.bundles</groupId>
+			<artifactId>org.apache.servicemix.bundles.ehcache</artifactId>
+			<version>2.6.2_1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.voisix.osgi.cache</groupId>
+			<artifactId>com.voisix.osgi.cache.factory</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+</project>

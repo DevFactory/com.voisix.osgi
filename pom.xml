@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<!-- Licensed to the Apache Software Foundation (ASF) under one or more 
 		contributor license agreements. See the NOTICE file distributed with this 
@@ -74,15 +73,29 @@
 	</licenses>
 
 	<properties>
+		<karaf.version>3.0.0-SNAPSHOT</karaf.version>
 		<mysql.version>5.1.18</mysql.version>
 		<c3p0.version>0.9.1.2</c3p0.version>
 	</properties>
 
 	<modules>
-		<module>com.voisix.osgi.jdbc</module>
 		<module>com.voisix.osgi.jmx</module>
-	</modules>
+		<module>com.voisix.osgi.jdbc</module>		
+		<module>com.voisix.osgi.cache</module>
+    <module>com.voisix.osgi.common</module>
+  </modules>
 
+	<build>	
+		<pluginManagement>
+			<plugins>
+				<plugin>
+                    <groupId>org.apache.karaf.tooling</groupId>
+                    <artifactId>karaf-maven-plugin</artifactId>
+                    <version>${karaf.version}</version>
+                </plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 
 	<repositories>
 
@@ -91,7 +104,7 @@
 			<name>Apache Snapshots</name>
 			<url>http://repository.apache.org/snapshots/</url>
 			<snapshots>
-				<enabled />
+				<enabled/>
 			</snapshots>
 		</repository>
 
@@ -100,7 +113,7 @@
 			<name>Ops4j Snapshots</name>
 			<url>https://oss.sonatype.org/content/repositories/ops4j-snapshots/</url>
 			<snapshots>
-				<enabled />
+				<enabled/>
 			</snapshots>
 		</repository>
 
@@ -129,7 +142,7 @@
 			<name>Apache Snapshots</name>
 			<url>http://repository.apache.org/snapshots/</url>
 			<snapshots>
-				<enabled />
+				<enabled/>
 			</snapshots>
 		</pluginRepository>
 		<pluginRepository>
@@ -137,7 +150,7 @@
 			<name>Ops4j Snapshots</name>
 			<url>https://oss.sonatype.org/content/repositories/ops4j-snapshots/</url>
 			<snapshots>
-				<enabled />
+				<enabled/>
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
