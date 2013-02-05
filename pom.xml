@@ -105,7 +105,7 @@
 			<name>Apache Snapshots</name>
 			<url>http://repository.apache.org/snapshots/</url>
 			<snapshots>
-				<enabled/>
+				<enabled>true</enabled>
 			</snapshots>
 		</repository>
 
@@ -114,7 +114,7 @@
 			<name>Ops4j Snapshots</name>
 			<url>https://oss.sonatype.org/content/repositories/ops4j-snapshots/</url>
 			<snapshots>
-				<enabled/>
+				<enabled>true</enabled>
 			</snapshots>
 		</repository>
 
@@ -143,15 +143,16 @@
 			<name>Apache Snapshots</name>
 			<url>http://repository.apache.org/snapshots/</url>
 			<snapshots>
-				<enabled/>
+				<enabled>true</enabled>
 			</snapshots>
 		</pluginRepository>
+		
 		<pluginRepository>
 			<id>ops4j-snapshots</id>
 			<name>Ops4j Snapshots</name>
 			<url>https://oss.sonatype.org/content/repositories/ops4j-snapshots/</url>
 			<snapshots>
-				<enabled/>
+				<enabled>true</enabled>
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>

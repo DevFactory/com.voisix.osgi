@@ -35,10 +35,7 @@ public class DataSourceManagedServiceFactory extends AbstractManagedServiceFacto
 			final Class<?> factory			= Class.forName(factoryClassName);
 			final DataSource dataSource 	= (DataSource) BeanUtils.instantiate(factory);
 			final BeanWrapper beanWrapper 	= PropertyAccessorFactory.forBeanPropertyAccess(dataSource);
-			final MutablePropertyValues propertyValues = new MutablePropertyValues();
-			for (String key : Collections.list(properties.keys())) {				
-				propertyValues.addPropertyValue(key, properties.get(key));				
-			}
+			final MutablePropertyValues propertyValues = getPropertyValues(properties);
 			
 			if (SPRING_JDBC_FACTORY_CLASS_NAME.equals(factoryClassName)) {	
 				final String drvierClassName 	= (String) properties.get(DRIVER_CLASS);

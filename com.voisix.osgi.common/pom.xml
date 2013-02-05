@@ -57,6 +57,11 @@
 			<artifactId>pax-logging-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
 	</dependencies>
 
 </project>

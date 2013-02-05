@@ -18,3 +18,9 @@ feature:repo-add mvn:com.voisix.osgi.jdbc/com.voisix.osgi.jdbc.features/1.0.0-SN
 feature:install -v com.voisix.osgi.jdbc.features 
 
 install -s mvn:com.voisix.osgi/com.voisix.osgi.jmx/1.0.0-SNAPSHOT/war
+
+
+Apache CXF Features
+===================
+
+repo-add mvn:org.apache.cxf.karaf/apache-cxf/2.7.2/xml/features

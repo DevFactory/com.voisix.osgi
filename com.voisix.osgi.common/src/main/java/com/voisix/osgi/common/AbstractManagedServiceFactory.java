@@ -1,5 +1,6 @@
 package com.voisix.osgi.common;
 
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedServiceFactory;
+import org.springframework.beans.MutablePropertyValues;
 import org.springframework.osgi.context.BundleContextAware;
 
 public abstract class AbstractManagedServiceFactory implements BundleContextAware, ManagedServiceFactory {
@@ -41,6 +43,14 @@ public abstract class AbstractManagedServiceFactory implements BundleContextAwar
 	@Override
 	public final void setBundleContext(BundleContext bundleContext) {
 		this.bundleContext = bundleContext;
+	}
+	
+	protected final MutablePropertyValues getPropertyValues(Dictionary<String, ?> properties) {
+		final MutablePropertyValues propertyValues = new MutablePropertyValues();
+		for (String key : Collections.list(properties.keys())) {				
+			propertyValues.addPropertyValue(key, properties.get(key));				
+		}
+		return propertyValues;
 	}
 
 	protected abstract void createService(String pid, Dictionary<String, ?> properties);	
