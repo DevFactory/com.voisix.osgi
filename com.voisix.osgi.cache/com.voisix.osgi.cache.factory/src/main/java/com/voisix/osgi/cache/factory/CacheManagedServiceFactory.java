@@ -2,8 +2,6 @@ package com.voisix.osgi.cache.factory;
 
 import java.util.Dictionary;
 
-import javax.sql.DataSource;
-
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
@@ -45,7 +43,16 @@ public class CacheManagedServiceFactory extends AbstractManagedServiceFactory {
 
 	@Override
 	protected void updateService(String pid, Dictionary<String, ?> properties) {
-		// TODO Auto-generated method stub
+		final String name = (String) properties.get("name");
+		final CacheManager cacheManager = ehCacheManager.getCacheManager();
+		if (cacheManager.cacheExists(name)) {
+			final Ehcache cache = cacheManager.getCache(name);
+			final CacheConfiguration cacheConfiguration = cache.getCacheConfiguration();
+			final BeanWrapper beanWrapper 	= PropertyAccessorFactory.forBeanPropertyAccess(cacheConfiguration);
+			final MutablePropertyValues propertyValues = getPropertyValues(properties);
+			beanWrapper.setPropertyValues(propertyValues, true);
+			logger.info("Updated: " + cache);
+		}
 		
 	}
 
