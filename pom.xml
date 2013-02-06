@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<!-- Licensed to the Apache Software Foundation (ASF) under one or more 
 		contributor license agreements. See the NOTICE file distributed with this 
@@ -81,22 +82,47 @@
 
 	<modules>
 		<module>com.voisix.osgi.jmx</module>
-		<module>com.voisix.osgi.jdbc</module>		
+		<module>com.voisix.osgi.jdbc</module>
 		<module>com.voisix.osgi.cache</module>
-    <module>com.voisix.osgi.common</module>
-  </modules>
+		<module>com.voisix.osgi.common</module>
+	</modules>
 
-	<build>	
+	<build>
 		<pluginManagement>
 			<plugins>
 				<plugin>
-                    <groupId>org.apache.karaf.tooling</groupId>
-                    <artifactId>karaf-maven-plugin</artifactId>
-                    <version>${karaf.version}</version>
-                </plugin>
+					<groupId>org.apache.karaf.tooling</groupId>
+					<artifactId>karaf-maven-plugin</artifactId>
+					<version>${karaf.version}</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.karaf.shell</groupId>
+				<artifactId>org.apache.karaf.shell.console</artifactId>
+				<version>${karaf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.karaf.jaas</groupId>
+				<artifactId>org.apache.karaf.jaas.config</artifactId>
+				<version>${karaf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.karaf.jaas</groupId>
+				<artifactId>org.apache.karaf.jaas.modules</artifactId>
+				<version>${karaf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.karaf.jaas</groupId>
+				<artifactId>org.apache.karaf.jaas.boot</artifactId>
+				<version>${karaf.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<repositories>
 
@@ -146,7 +172,7 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</pluginRepository>
-		
+
 		<pluginRepository>
 			<id>ops4j-snapshots</id>
 			<name>Ops4j Snapshots</name>
@@ -163,12 +189,12 @@
 			<name>Voisix Release Distribution Repository</name>
 			<url>http://nexus.voisix.com/content/repositories/releases/</url>
 		</repository>
-		
+
 		<snapshotRepository>
 			<id>snapshots.voisix.com</id>
 			<name>Voisix Snapshot Distribution Repository</name>
 			<url>http://nexus.voisix.com/content/repositories/snapshots/</url>
-		</snapshotRepository>		
+		</snapshotRepository>
 	</distributionManagement>
 
 </project>

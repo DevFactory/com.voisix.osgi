@@ -34,11 +34,12 @@ public class CacheManagedServiceFactory extends AbstractManagedServiceFactory {
 		cache.setCacheManager(cacheManager);
 		cacheManager.addCacheIfAbsent(cache);
 		
+		
 		final ServiceRegistration<Ehcache> serviceRegistration = bundleContext.registerService(Ehcache.class, cache, properties);
 		serviceRegistrationMap.put(pid, serviceRegistration);
-		
-		logger.info("Configured caches: " + ehCacheManager.getCacheNames());
-		logger.info("Created: " + cache);		
+	
+		logger.info("Created: " + cache);
+		ehCacheManager.afterPropertiesSet();
 	}
 
 	@Override
@@ -52,6 +53,7 @@ public class CacheManagedServiceFactory extends AbstractManagedServiceFactory {
 			final MutablePropertyValues propertyValues = getPropertyValues(properties);
 			beanWrapper.setPropertyValues(propertyValues, true);
 			logger.info("Updated: " + cache);
+			ehCacheManager.afterPropertiesSet();
 		}
 		
 	}
@@ -59,14 +61,19 @@ public class CacheManagedServiceFactory extends AbstractManagedServiceFactory {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void deleteService(String pid) {
-		final ServiceRegistration<Ehcache> serviceRegistration = (ServiceRegistration<Ehcache>) serviceRegistrationMap.get(pid);
-		final ServiceReference<Ehcache> serviceReference = serviceRegistration.getReference();
-		final Ehcache cache = bundleContext.getService(serviceReference);
+		final ServiceRegistration<Ehcache> serviceRegistration 	= (ServiceRegistration<Ehcache>) serviceRegistrationMap.get(pid);
+		final ServiceReference<Ehcache> serviceReference 		= serviceRegistration.getReference();
 		final CacheManager cacheManager = ehCacheManager.getCacheManager();
+		final Ehcache cache = bundleContext.getService(serviceReference);
+		
 		cacheManager.removeCache(cache.getName());
+		ehCacheManager.getCacheNames().remove(cache.getName());
+		//ehCacheManager.setCacheManager(cacheManager);
+		ehCacheManager.afterPropertiesSet();
 		serviceRegistrationMap.remove(serviceRegistration);
 		serviceRegistration.unregister();
-		logger.info("Deleted: " + cache);		
+		logger.info("Deleted: " + cache);
+		
 	}
 
 	public EhCacheCacheManager getEhCacheManager() {

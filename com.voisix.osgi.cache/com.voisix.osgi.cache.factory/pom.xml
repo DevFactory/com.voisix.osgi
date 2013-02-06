@@ -41,6 +41,7 @@
 						<Import-Package>
 							net.sf.ehcache,
 							org.osgi.service.cm,
+							org.springframework.cache,
 							*
 						</Import-Package>
 						<Spring-Context>META-INF/spring/*;publish-context:=false</Spring-Context>
