@@ -29,5 +29,22 @@
 	</osgi:service>
 	
 	<osgi:service ref="cacheManager" interface="org.springframework.cache.CacheManager"/>
+	
+	<!-- EHCache MBeam-->
+	<bean id="mbeanServer" 	class="org.springframework.jmx.support.MBeanServerFactoryBean" p:locateExistingServerIfPossible="true" />
+    <bean id="ehCacheMBeanRegistration" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"
+    	p:staticMethod="net.sf.ehcache.management.ManagementService.registerMBeans">       
+        <property name="arguments">
+            <list>
+                <ref bean="ehcache"/>
+                <ref bean="mbeanServer"/>
+                <value>true</value>
+                <value>true</value>
+                <value>true</value>
+                <value>true</value>
+            </list>
+        </property>
+    </bean>
+	
 
 </beans>

@@ -42,6 +42,9 @@
 							net.sf.ehcache,
 							org.osgi.service.cm,
 							org.springframework.cache,
+							org.springframework.beans.factory.config,
+							org.springframework.jmx.support,
+							net.sf.ehcache.management,
 							*
 						</Import-Package>
 						<Spring-Context>META-INF/spring/*;publish-context:=false</Spring-Context>
