@@ -1,0 +1,130 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.voisix.osgi.examples.cxf</groupId>
+		<artifactId>com.voisix.osgi.examples.cxf</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>com.voisix.osgi.examples.cxf.jaxrs</artifactId>
+	<name>Examples - CXF JAX-RS</name>
+	<packaging>bundle</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-rs-extension-providers</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>	
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.servicemix.specs</groupId>
+			<artifactId>org.apache.servicemix.specs.jsr311-api-1.1.1</artifactId>
+			<version>${servicemix.specs.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.servicemix.specs</groupId>
+			<artifactId>org.apache.servicemix.specs.jaxb-api-2.2</artifactId>
+		</dependency>
+		
+		<!-- JSON Providers -->
+		
+		<!-- Jackson -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-jaxrs</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-xc</artifactId>
+			<version>${jackson.version}</version>			
+		</dependency>
+
+		<!-- Jettison -->
+		<dependency>
+			<groupId>org.codehaus.jettison</groupId>
+			<artifactId>jettison</artifactId>
+			<version>1.3.3</version>
+			<scope>test</scope>
+		</dependency>
+
+
+		<!-- JUnit Test -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Bundle-Version>${project.version}</Bundle-Version>
+						<Export-Package>com.voisix.osgi.examples.cxf.jaxrs*;version=${project.version}</Export-Package>
+						<Import-Package>
+							javax.wsdl,
+							javax.xml.bind,
+							javax.xml.bind.annotation,
+							javax.ws.rs,
+							javax.ws.rs.core,
+							org.springframework.beans.factory.config,
+							org.apache.cxf.bus.spring,
+							org.apache.cxf.jaxrs.provider.json,
+							org.codehaus.jackson.jaxrs,
+							org.codehaus.jackson.xc,
+							*
+						</Import-Package>
+						<Spring-Context>META-INF/spring/*;publish-context:=false</Spring-Context>
+						<JAR-Service-Provider>true</JAR-Service-Provider>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

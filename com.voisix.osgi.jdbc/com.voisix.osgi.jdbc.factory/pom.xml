@@ -45,7 +45,7 @@
 							com.mchange.v2.c3p0; resolution:="optional",
 							org.apache.commons.dbcp; resolution:="optional",
 							org.apache.commons.pool; resolution:="optional",
-							com.mysql.jdbc.integration.c3p0; resolution:="optional",
+							com.mysql.jdbc.integration.c3p0; resolution:="optional",						
 							*
 						</Import-Package>
 						<Spring-Context>META-INF/spring/*;publish-context:=false</Spring-Context>

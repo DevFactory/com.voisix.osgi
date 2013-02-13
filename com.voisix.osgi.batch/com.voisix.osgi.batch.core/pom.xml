@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.voisix.osgi</groupId>
+		<artifactId>com.voisix.osgi.batch</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.voisix.osgi.batch</groupId>
+	<artifactId>com.voisix.osgi.batch.core</artifactId>
+	<packaging>bundle</packaging>
+	<name>Batch Infrastructure</name>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Bundle-Version>${project.version}</Bundle-Version>
+						<Export-Package>com.voisix.osgi.batch.core*;version=${project.version}</Export-Package>
+						<Import-Package>							
+							org.springframework.jdbc.datasource,
+							org.springframework.jdbc.datasource.embedded,
+							org.springframework.batch.core,
+							org.springframework.batch.core.launch.support,
+							org.springframework.batch.core.repository.support,
+							*
+						</Import-Package>
+						<Spring-Context>META-INF/spring/*;publish-context:=false</Spring-Context>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.osgi</groupId>
+			<artifactId>spring-osgi-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Spring Batch Framework -->
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-core</artifactId>
+			<version>${spring.batch.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.xml.stream</groupId>
+			<artifactId>com.springsource.javax.xml.stream</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.xmlpull</groupId>
+			<artifactId>com.springsource.org.xmlpull</artifactId>
+			<version>1.1.4.c</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>com.springsource.com.thoughtworks.xstream</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+
+	</dependencies>
+</project>

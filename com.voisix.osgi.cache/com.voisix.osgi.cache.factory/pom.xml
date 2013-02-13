@@ -47,8 +47,7 @@
 							net.sf.ehcache.management,
 							*
 						</Import-Package>
-						<Spring-Context>META-INF/spring/*;publish-context:=false</Spring-Context>
-						<JAR-Service-Provider>true</JAR-Service-Provider>
+						<Spring-Context>META-INF/spring/*;publish-context:=false</Spring-Context>						
 					</instructions>
 				</configuration>
 			</plugin>
