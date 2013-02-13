@@ -1,18 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<parent>
-		<groupId>com.voisix.osgi</groupId>
-		<artifactId>com.voisix.osgi.batch</artifactId>
+		<groupId>com.voisix.osgi.examples</groupId>
+		<artifactId>com.voisix.osgi.examples.batch</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-
-	<groupId>com.voisix.osgi.batch</groupId>
-	<artifactId>com.voisix.osgi.batch.core</artifactId>
+	
+	<groupId>com.voisix.osgi.examples.batch</groupId>
+	<artifactId>com.voisix.osgi.examples.batch.job.helloworld</artifactId>
 	<packaging>bundle</packaging>
-	<name>Batch Infrastructure</name>
-
+	<name>Batch Example - Hello World Job</name>
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -23,40 +22,30 @@
 					<instructions>
 						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-Version>${project.version}</Bundle-Version>
-						<Export-Package>com.voisix.osgi.batch.core*;version=${project.version}</Export-Package>
+						<Export-Package>com.voisix.osgi.examples.batch.job-file*;version=${project.version}</Export-Package>
 						<Import-Package>
-							org.h2,
-							org.aopalliance.aop,
-							org.springframework.aop,
-							org.springframework.aop.framework,
-							org.springframework.context,
-							org.springframework.core.task,							
-							org.springframework.jmx.support,
-							org.springframework.jmx.export,
-							org.springframework.jmx.export.annotation,
-							org.springframework.jmx.export.assembler,
-							org.springframework.jmx.export.naming,													
-							org.springframework.jdbc.datasource,
-							org.springframework.jdbc.datasource.embedded,
-							org.springframework.transaction,
+							org.springframework.transaction,							
+							org.springframework.beans.factory.config,								
 							org.springframework.batch.core,
-							org.springframework.batch.core.launch,
-							org.springframework.batch.core.launch.support,
+							org.springframework.batch.core.configuration,					
+							org.springframework.batch.core.configuration.support,		
+							org.springframework.batch.core.configuration.xml,							
+							org.springframework.batch.core.scope,
 							org.springframework.batch.core.repository,
-							org.springframework.batch.core.repository.support,
-							org.springframework.batch.core.explore,
-							org.springframework.batch.core.explore.support,
-							org.springframework.batch.core.configuration,
-							org.springframework.batch.core.configuration.support,
+							org.springframework.batch.core.job.flow.support,
+							org.springframework.batch.core.job.flow.support.state,						
+							org.springframework.batch.item.file.transform,							
 							*
 						</Import-Package>
+						<!-- 
 						<Spring-Context>META-INF/spring/*;publish-context:=false</Spring-Context>
+						 -->
 					</instructions>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>

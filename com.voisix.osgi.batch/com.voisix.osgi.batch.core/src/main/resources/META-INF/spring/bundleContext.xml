@@ -1,28 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:c="http://www.springframework.org/schema/c"
-	xmlns:osgi="http://www.springframework.org/schema/osgi"
-	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
 		http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
 	
+	<!-- 
 	<jdbc:embedded-database id="dataSource" type="H2">
-		 <jdbc:script location="classpath:/org/springframework/batch/core/schema-h2.sql"/>
+		<jdbc:script location="classpath:/org/springframework/batch/core/schema-h2.sql" />
 	</jdbc:embedded-database>
+	 -->
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:data/batch/db" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+	</bean>
 	
-	
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" 
-		p:dataSource-ref="dataSource"/>
+	<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
+		<jdbc:script location="classpath:/org/springframework/batch/core/schema-h2.sql" />
+	</jdbc:initialize-database>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		p:dataSource-ref="dataSource" />
+
+	<!-- Spring Batch -->
+	<bean id="exceptionTranslator"
+		class="org.springframework.batch.core.launch.support.RuntimeExceptionTranslator" />
 		
-	<!-- Spring Batch  -->
-	<bean id="exceptionTranslator" class="org.springframework.batch.core.launch.support.RuntimeExceptionTranslator" />
+	<!-- Async Task Executor -->
+	<bean id="taskExecutor" class="org.springframework.core.task.SimpleAsyncTaskExecutor" />
+
+	<bean id="jobRepository"
+		class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean"
+		p:dataSource-ref="dataSource" p:transactionManager-ref="transactionManager" 
+		p:databaseType="H2"/>
+		
+	<bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher"
+		p:jobRepository-ref="jobRepository"
+		p:taskExecutor-ref="taskExecutor" />
+
+	<bean id="jobExplorer" class="org.springframework.batch.core.explore.support.JobExplorerFactoryBean"
+		p:dataSource-ref="dataSource"/>
+    
+	<bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry"/>
 	
-	<bean id="job.Repository" class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean"
-		p:dataSource-ref="dataSource"
-		p:transactionManager-ref="transactionManager"/>			
-	
+	<bean id="jobOperator" class="org.springframework.batch.core.launch.support.SimpleJobOperator"
+    	p:jobExplorer-ref="jobExplorer"
+    	p:jobLauncher-ref="jobLauncher"
+    	p:jobRegistry-ref="jobRegistry"
+    	p:jobRepository-ref="jobRepository"/>
+    	
+    <bean id="jobRegistrar" class="com.voisix.osgi.batch.core.OSGIServiceJobRegistrarImpl" 
+    	p:jobRegistry-ref="jobRegistry"/>
+    	
+    <osgi:list id="jobRegistrarListener" cardinality="0..N">
+    	<osgi:interfaces>
+    		<value>org.springframework.batch.core.Job</value>
+    	</osgi:interfaces>
+    	<osgi:listener ref="jobRegistrar" bind-method="register" unbind-method="unregister"/>
+    </osgi:list>	
+    	
+    <!-- OSGI Services -->
+    <osgi:service ref="jobRepository" interface="org.springframework.batch.core.repository.JobRepository"/>
+    <osgi:service ref="jobOperator" interface="org.springframework.batch.core.launch.JobOperator"/>
+    <osgi:service ref="jobRegistry" interface="org.springframework.batch.core.configuration.JobRegistry"/>
+    <osgi:service ref="transactionManager" interface="org.springframework.transaction.PlatformTransactionManager">
+    	<osgi:service-properties>
+    		<entry key="name" value="batch-txManager"/>
+    	</osgi:service-properties>
+    </osgi:service>
+          
+    <!-- JMX -->
+    <bean id="mbeanServer" 	class="org.springframework.jmx.support.MBeanServerFactoryBean" p:locateExistingServerIfPossible="true" />    
+    <bean id="exporter" class="org.springframework.jmx.export.MBeanExporter" p:autodetect="true">
+		<property name="beans">
+			<map>
+				<entry key="org.springframework.batch:name=JobOperator" value-ref="jobOperator"/>				
+			</map>
+		</property>
+		<property name="assembler">
+			<bean class="org.springframework.jmx.export.assembler.MethodNameBasedMBeanInfoAssembler">
+				<property name="managedMethods">
+					<value>
+						getExecutions,
+						getJobInstances,
+						getRunningExecutions,
+						getParameters,
+						start,
+						restart,
+						startNextInstance,
+						stop,
+						getSummary,
+						getStepExecutionSummaries,
+						getJobNames
+					</value>
+				</property>
+			</bean>
+		</property>
+	</bean>
+    
 </beans>

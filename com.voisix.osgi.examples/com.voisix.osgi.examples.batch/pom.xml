@@ -3,18 +3,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
-		<groupId>com.voisix.osgi</groupId>
-		<artifactId>com.voisix.osgi</artifactId>
+		<groupId>com.voisix.osgi.examples</groupId>
+		<artifactId>com.voisix.osgi.examples</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	
-	<groupId>com.voisix.osgi.examples</groupId>
-	<artifactId>com.voisix.osgi.examples</artifactId>
+	<artifactId>com.voisix.osgi.examples.batch</artifactId>
 	<packaging>pom</packaging>
-	<name>Examples</name>
-
+	<name>Batch Examples</name>
+	
 	<modules>
-		<module>com.voisix.osgi.examples.cxf</module>
-		<module>com.voisix.osgi.examples.batch</module>
+		<module>com.voisix.osgi.examples.batch.job.helloworld</module>
 	</modules>
 </project>
