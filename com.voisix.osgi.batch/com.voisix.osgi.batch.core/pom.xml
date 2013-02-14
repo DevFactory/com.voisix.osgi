@@ -38,7 +38,8 @@
 							org.springframework.jmx.export.naming,													
 							org.springframework.jdbc.datasource,
 							org.springframework.jdbc.datasource.embedded,
-							org.springframework.transaction,
+							org.springframework.scheduling.concurrent,
+							org.springframework.transaction,							
 							org.springframework.batch.core,
 							org.springframework.batch.core.launch,
 							org.springframework.batch.core.launch.support,
@@ -48,6 +49,7 @@
 							org.springframework.batch.core.explore.support,
 							org.springframework.batch.core.configuration,
 							org.springframework.batch.core.configuration.support,
+							org.codehaus.jettison.mapped,
 							*
 						</Import-Package>
 						<Spring-Context>META-INF/spring/*;publish-context:=false</Spring-Context>

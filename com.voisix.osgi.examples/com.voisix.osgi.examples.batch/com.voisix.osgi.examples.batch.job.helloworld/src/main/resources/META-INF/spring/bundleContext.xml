@@ -13,27 +13,23 @@
 	<osgi:reference id="jobRepository" 	interface="org.springframework.batch.core.repository.JobRepository"/>
 	<osgi:reference id="jobRegistry" 	interface="org.springframework.batch.core.configuration.JobRegistry"/>
 	<osgi:reference id="txManager" 		interface="org.springframework.transaction.PlatformTransactionManager"
-		filter="(name=batch-txManager)"/>
-		
-	<!-- 
-    <bean id="jobLoader" class="org.springframework.batch.core.configuration.support.DefaultJobLoader"
-    	p:jobRegistry-ref="jobRegistry" />	
+		filter="(Bundle-SymbolicName=com.voisix.osgi.batch.core)"/>
+	<!-- 	
+	<osgi:reference id="taskExecutor"	interface="org.springframework.core.task.AsyncTaskExecutor"	filter="(Bundle-SymbolicName=com.voisix.osgi.batch.core)"/>
+	<bean id="taskExecutor" class="org.springframework.core.task.SimpleAsyncTaskExecutor"/>
 	 -->
-	<!-- Register jobs from fragment bundles -->
-	<!-- 
-	<bean class="org.springframework.batch.core.configuration.support.AutomaticJobRegistrar"
-		p:jobLoader-ref="jobLoader">
-    	<property name="applicationContextFactories">
-    		<bean class="org.springframework.batch.core.configuration.support.ClasspathXmlApplicationContextsFactoryBean">
-    			<property name="resources" value="classpath*:batch/**.xml"/>    			
-    		</bean>
-    	</property>    		
-    </bean>    
-     -->
 	
-	<batch:job id="helloWorldJob" job-repository="jobRepository">
+	<bean id="jobParametersIncrementer" class="org.springframework.batch.core.launch.support.RunIdIncrementer"/>
+
+	<batch:job id="helloWorldJob" 
+		job-repository="jobRepository" 
+		incrementer="jobParametersIncrementer" 
+		restartable="true" >
 		<batch:step id="helloWorldStep">
-			<batch:tasklet transaction-manager="txManager">
+			<batch:tasklet
+				allow-start-if-complete="true" 				
+				transaction-manager="txManager"
+				throttle-limit="1">			
 				<bean class="com.voisix.osgi.examples.batch.job.helloworld.HelloWorldTasklet"/>				
 			</batch:tasklet>
 		</batch:step>
@@ -41,10 +37,4 @@
 	
 	<osgi:service ref="helloWorldJob" interface="org.springframework.batch.core.Job"/>
 	
-	<!-- 
-	<bean id="jobFactory" class="org.springframework.batch.core.configuration.support.ReferenceJobFactory" c:job-ref="helloWorldJob"/>
-	
-	<bean id="registerTheJob" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" 
-		p:targetObject-ref="jobRegistry" p:targetMethod="register" p:arguments-ref="jobFactory"/>
-	 -->
 </beans>

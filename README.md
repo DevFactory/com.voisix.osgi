@@ -25,6 +25,8 @@ Apache CXF Features
 
 repo-add mvn:org.apache.cxf.karaf/apache-cxf/2.7.3/xml/features
 
+feature:install cxf
+
 install -s mvn:org.codehaus.jackson/jackson-core-asl/1.9.12
 
 install -s mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.12
@@ -47,7 +49,11 @@ install -s mvn:com.thoughtworks.xstream/com.springsource.com.thoughtworks.xstrea
 
 install -s mvn:javax.xml.stream/com.springsource.javax.xml.stream/1.0.1
 
+install -s mvn:org.springframework.batch/spring-batch-core/2.1.9.RELEASE
+
 install -s mvn:org.springframework.batch/spring-batch-infrastructure/2.1.9.RELEASE
 
-install -s mvn:org.springframework.batch/spring-batch-core/2.1.9.RELEASE
+install -s mvn:com.voisix.osgi.batch/com.voisix.osgi.batch.core/1.0.0-SNAPSHOT
+
+
 

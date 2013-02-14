@@ -33,7 +33,21 @@
 		class="org.springframework.batch.core.launch.support.RuntimeExceptionTranslator" />
 		
 	<!-- Async Task Executor -->
+	<!-- 
 	<bean id="taskExecutor" class="org.springframework.core.task.SimpleAsyncTaskExecutor" />
+	 -->
+	 
+	<!-- Task executor -->
+	<bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor"
+		p:corePoolSize="2" 
+		p:maxPoolSize="20" 
+		p:queueCapacity="100"
+		p:daemon="true" 
+		p:threadGroupName="batch"
+		p:rejectedExecutionHandler-ref="executionHandler"
+		p:waitForTasksToCompleteOnShutdown="true" />	
+	<bean id="executionHandler" class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy"/>
+	
 
 	<bean id="jobRepository"
 		class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean"
@@ -42,7 +56,7 @@
 		
 	<bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher"
 		p:jobRepository-ref="jobRepository"
-		p:taskExecutor-ref="taskExecutor" />
+		p:taskExecutor-ref="taskExecutor"/>
 
 	<bean id="jobExplorer" class="org.springframework.batch.core.explore.support.JobExplorerFactoryBean"
 		p:dataSource-ref="dataSource"/>
@@ -69,11 +83,8 @@
     <osgi:service ref="jobRepository" interface="org.springframework.batch.core.repository.JobRepository"/>
     <osgi:service ref="jobOperator" interface="org.springframework.batch.core.launch.JobOperator"/>
     <osgi:service ref="jobRegistry" interface="org.springframework.batch.core.configuration.JobRegistry"/>
-    <osgi:service ref="transactionManager" interface="org.springframework.transaction.PlatformTransactionManager">
-    	<osgi:service-properties>
-    		<entry key="name" value="batch-txManager"/>
-    	</osgi:service-properties>
-    </osgi:service>
+    <osgi:service ref="transactionManager" interface="org.springframework.transaction.PlatformTransactionManager"/>
+    <osgi:service ref="taskExecutor" interface="org.springframework.core.task.AsyncTaskExecutor"/>
           
     <!-- JMX -->
     <bean id="mbeanServer" 	class="org.springframework.jmx.support.MBeanServerFactoryBean" p:locateExistingServerIfPossible="true" />    
