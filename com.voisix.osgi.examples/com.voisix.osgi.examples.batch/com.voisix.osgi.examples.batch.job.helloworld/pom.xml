@@ -24,6 +24,10 @@
 						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>com.voisix.osgi.examples.batch.job-file*;version=${project.version}</Export-Package>
 						<Import-Package>
+							org.aopalliance.aop,
+							org.springframework.aop,
+							org.springframework.aop.framework,
+							org.springframework.aop.scope,							
 							org.springframework.core.task,
 							org.springframework.scheduling.concurrent,							
 							org.springframework.transaction,							

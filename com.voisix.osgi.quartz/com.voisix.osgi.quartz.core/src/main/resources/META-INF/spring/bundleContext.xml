@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+		http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		p:driverClassName="org.h2.Driver"
+		p:url="jdbc:h2:data/batch/db"
+		p:username="sa"
+		p:password=""/>
+	
+	<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
+		<jdbc:script location="classpath:/com/voisix/osgi/quartz/core/tables_h2.sql" />
+	</jdbc:initialize-database>
+	
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		p:dataSource-ref="dataSource" />
+	
+	<bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:transactionManager-ref="transactionManager"
+	/>
+	
+	<osgi:service ref="scheduler" interface="org.quartz.Scheduler"/>
+	
+	 <!-- JMX -->
+    <bean id="mbeanServer" 	class="org.springframework.jmx.support.MBeanServerFactoryBean" p:locateExistingServerIfPossible="true" />    
+    <bean id="exporter" class="org.springframework.jmx.export.MBeanExporter" p:autodetect="true">
+		<property name="beans">
+			<map>
+				<entry key="org.quartz:name=Scheduler" value-ref="scheduler"/>				
+			</map>
+		</property>
+		<property name="assembler">
+			<bean class="org.springframework.jmx.export.assembler.MethodNameBasedMBeanInfoAssembler">
+				<property name="managedMethods">
+					<value>
+						getSchedulerName,
+						getSchedulerInstanceId,
+						start,
+						startDelayed,
+						isStarted,
+						standby,
+						isInStandbyMode,
+						shutdown,
+						isShutdown,
+						getMetaData,
+						getCurrentlyExecutingJobs,
+						pauseAll,
+						resumeAll,
+						getJobGroupNames,
+						getTriggerGroupNames,
+						getPausedTriggerGroups,
+						clear
+					</value>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+</beans>

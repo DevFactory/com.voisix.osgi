@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>com.voisix.osgi.quartz</artifactId>
+		<groupId>com.voisix.osgi</groupId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.voisix.osgi.quartz</groupId>
+	<artifactId>com.voisix.osgi.quartz.core</artifactId>
+	<packaging>bundle</packaging>
+
+	<name>Quartz Scheduler Infrastructure</name>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Bundle-Version>${project.version}</Bundle-Version>
+						<Export-Package>com.voisix.osgi.quartz.core*;version=${project.version}</Export-Package>
+						<Import-Package>
+							org.h2,
+							org.aopalliance.aop,
+							org.springframework.aop,
+							org.springframework.aop.framework,
+							org.springframework.context,
+							org.springframework.core.task,
+							org.springframework.jmx.support,
+							org.springframework.jmx.export,
+							org.springframework.jmx.export.annotation,
+							org.springframework.jmx.export.assembler,
+							org.springframework.jmx.export.naming,
+							org.springframework.jdbc.datasource,
+							org.springframework.jdbc.datasource.embedded,
+							org.springframework.scheduling.concurrent,
+							org.springframework.transaction,
+							*
+						</Import-Package>
+						<Spring-Context>META-INF/spring/*;publish-context:=false</Spring-Context>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>			
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.osgi</groupId>
+			<artifactId>spring-osgi-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.servicemix.bundles</groupId>
+			<artifactId>org.apache.servicemix.bundles.quartz</artifactId>
+			<version>${quartz.version}</version>
+		</dependency>
+
+	</dependencies>
+</project>

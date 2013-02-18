@@ -13,12 +13,12 @@
 	</jdbc:embedded-database>
 	 -->
 
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="org.h2.Driver" />
-		<property name="url" value="jdbc:h2:data/batch/db" />
-		<property name="username" value="sa" />
-		<property name="password" value="" />
-	</bean>
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		p:driverClassName="org.h2.Driver"
+		p:url="jdbc:h2:data/batch/db"
+		p:username="sa"
+		p:password=""/>
+
 	
 	<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
 		<jdbc:script location="classpath:/org/springframework/batch/core/schema-h2.sql" />
