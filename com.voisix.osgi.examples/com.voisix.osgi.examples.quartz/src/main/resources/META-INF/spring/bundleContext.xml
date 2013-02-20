@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+
+
+	<!-- 
+	<osgi:reference id="jobLauncher" interface="org.springframework.batch.core.launch.JobLauncher" />
+	<osgi:reference id="batchJob" interface="org.springframework.batch.core.Job"
+		filter="(&amp; (Bundle-SymbolicName=com.voisix.osgi.examples.batch.job.helloworld) (org.springframework.osgi.bean.name=helloWorldJob))" />
+	 -->
+	 	
+	<bean id="helloWorldJob" class="com.voisix.osgi.examples.quartz.HelloWorldJob"/>	
+	
+	<bean id="helloWorldJobDetail" class="com.voisix.osgi.examples.quartz.JobDetailFactoryBean"
+		p:jobClass="com.voisix.osgi.examples.quartz.HelloWorldJob"/> 
+		
+	<bean id="helloWorldTrigger" class="com.voisix.osgi.examples.quartz.TriggerFactoryBean"		
+		p:jobDetail-ref="helloWorldJobDetail"/>
+
+	<osgi:service ref="helloWorldJobDetail" interface="org.quartz.JobDetail"/>
+	<osgi:service ref="helloWorldTrigger" interface="org.quartz.Trigger"/>	
+
+</beans>

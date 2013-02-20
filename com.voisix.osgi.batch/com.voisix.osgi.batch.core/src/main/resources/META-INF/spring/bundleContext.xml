@@ -85,6 +85,7 @@
     <osgi:service ref="jobRegistry" interface="org.springframework.batch.core.configuration.JobRegistry"/>
     <osgi:service ref="transactionManager" interface="org.springframework.transaction.PlatformTransactionManager"/>
     <osgi:service ref="taskExecutor" interface="org.springframework.core.task.AsyncTaskExecutor"/>
+    <osgi:service ref="jobLauncher" interface="org.springframework.batch.core.launch.JobLauncher"/>
           
     <!-- JMX -->
     <bean id="mbeanServer" 	class="org.springframework.jmx.support.MBeanServerFactoryBean" p:locateExistingServerIfPossible="true" />    

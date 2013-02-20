@@ -31,6 +31,9 @@
 							org.aopalliance.aop,
 							org.springframework.aop,
 							org.springframework.aop.framework,
+							org.springframework.aop.framework.autoproxy,
+							org.springframework.aop.support,
+							org.springframework.beans.factory.config,
 							org.springframework.context,
 							org.springframework.core.task,
 							org.springframework.jmx.support,
@@ -41,7 +44,15 @@
 							org.springframework.jdbc.datasource,
 							org.springframework.jdbc.datasource.embedded,
 							org.springframework.scheduling.concurrent,
+							org.springframework.scheduling.quartz,
 							org.springframework.transaction,
+							org.quartz,
+							org.quartz.core,
+							org.quartz.core.jmx,
+							org.quartz.spi,
+							org.quartz.simpl,
+							com.voisix.osgi.common,
+							com.voisix.osgi.examples.quartz,
 							*
 						</Import-Package>
 						<Spring-Context>META-INF/spring/*;publish-context:=false</Spring-Context>
@@ -53,28 +64,30 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.voisix.osgi</groupId>
+			<artifactId>com.voisix.osgi.common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>			
+			<artifactId>spring-context-support</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.osgi</groupId>
-			<artifactId>spring-osgi-core</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>org.apache.servicemix.bundles</groupId>
 			<artifactId>org.apache.servicemix.bundles.quartz</artifactId>
 			<version>${quartz.version}</version>
 		</dependency>
-
 	</dependencies>
 </project>

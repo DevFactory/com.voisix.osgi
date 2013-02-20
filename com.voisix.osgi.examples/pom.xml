@@ -16,5 +16,6 @@
 	<modules>
 		<module>com.voisix.osgi.examples.cxf</module>
 		<module>com.voisix.osgi.examples.batch</module>
+		<module>com.voisix.osgi.examples.quartz</module>
 	</modules>
 </project>

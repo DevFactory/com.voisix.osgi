@@ -6,15 +6,18 @@
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
-		http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
 		p:driverClassName="org.h2.Driver"
-		p:url="jdbc:h2:data/batch/db"
+		p:url="jdbc:h2:data/quartz/db"
 		p:username="sa"
 		p:password=""/>
 	
@@ -26,46 +29,47 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
 		p:dataSource-ref="dataSource" />
 	
+	
+	<bean id="bundleContext" class="com.voisix.osgi.common.BundleContextFactoryBean"/>
+	
 	<bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
 		p:dataSource-ref="dataSource"
-		p:transactionManager-ref="transactionManager"
-	/>
-	
-	<osgi:service ref="scheduler" interface="org.quartz.Scheduler"/>
-	
-	 <!-- JMX -->
-    <bean id="mbeanServer" 	class="org.springframework.jmx.support.MBeanServerFactoryBean" p:locateExistingServerIfPossible="true" />    
-    <bean id="exporter" class="org.springframework.jmx.export.MBeanExporter" p:autodetect="true">
-		<property name="beans">
+		p:transactionManager-ref="transactionManager"		
+		p:configLocation="classpath:/META-INF/quartz.properties"
+		p:waitForJobsToCompleteOnShutdown="true">
+		<property name="schedulerContextAsMap">
 			<map>
-				<entry key="org.quartz:name=Scheduler" value-ref="scheduler"/>				
+				<entry key="bundleContext" value-ref="bundleContext"/>				
 			</map>
-		</property>
-		<property name="assembler">
-			<bean class="org.springframework.jmx.export.assembler.MethodNameBasedMBeanInfoAssembler">
-				<property name="managedMethods">
-					<value>
-						getSchedulerName,
-						getSchedulerInstanceId,
-						start,
-						startDelayed,
-						isStarted,
-						standby,
-						isInStandbyMode,
-						shutdown,
-						isShutdown,
-						getMetaData,
-						getCurrentlyExecutingJobs,
-						pauseAll,
-						resumeAll,
-						getJobGroupNames,
-						getTriggerGroupNames,
-						getPausedTriggerGroups,
-						clear
-					</value>
-				</property>
-			</bean>
 		</property>
 	</bean>
 	
+	<bean id="schedulerDecorator" class="com.voisix.osgi.quartz.core.SchedulerDecorator" p:scheduler-ref="scheduler"/>
+	
+	<osgi:list id="jobDetailListener" cardinality="0..N">
+		<osgi:interfaces>
+			<value>org.quartz.JobDetail</value>			
+		</osgi:interfaces>
+		<osgi:listener ref="schedulerDecorator" bind-method="scheduleJob" unbind-method="unscheduleJob"/>
+	</osgi:list>
+		
+	<osgi:list id="triggerListener" cardinality="0..N">
+		<osgi:interfaces>
+			<value>org.quartz.Trigger</value>
+		</osgi:interfaces>
+		<osgi:listener ref="schedulerDecorator" bind-method="scheduleJob" unbind-method="unscheduleJob"/>
+	</osgi:list>
+	
+	<!-- 
+	<bean id="jobFactory" class="org.springframework.scheduling.quartz.SpringBeanJobFactory"/>	
+		
+	<bean id="jobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean"
+		p:jobClass="com.voisix.osgi.quartz.core.SimpleJob"/>
+		
+	<bean id="trigger" class="com.voisix.osgi.quartz.core.SimpleTriggerFactoryBean"
+		p:jobDetail-ref="jobDetail" p:repeatCount="10" p:repeatInterval="30" p:startDelay="5"/>
+	 --> 
+			
+	 <!-- JMX -->
+    <bean id="mbeanServer" 	class="org.springframework.jmx.support.MBeanServerFactoryBean" p:locateExistingServerIfPossible="true" />
 </beans>
