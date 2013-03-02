@@ -51,10 +51,10 @@
 							org.quartz.core.jmx,
 							org.quartz.spi,
 							org.quartz.simpl,
-							com.voisix.osgi.common,
-							com.voisix.osgi.examples.quartz,
+							com.voisix.osgi.common,							
 							*
 						</Import-Package>
+						<DynamicImport-Package>*</DynamicImport-Package>
 						<Spring-Context>META-INF/spring/*;publish-context:=false</Spring-Context>
 					</instructions>
 				</configuration>

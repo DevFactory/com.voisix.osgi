@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:core="http://cxf.apache.org/core"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+		http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+
+	<core:bus name="bus">
+		<core:features>
+			<core:logging id="log" />
+		</core:features>
+	</core:bus>
+	
+	<bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider" />
+	<bean id="jacksonProvider" class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider" />
+	
+	<bean id="clientFactory" class="org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean"
+		p:address="http://localhost:8181/cxf/typeTest"
+		p:serviceClass="com.voisix.osgi.examples.cxf.jaxrs.TypeTest"
+		p:inheritHeaders="true"
+		p:provider-ref="jacksonProvider"
+		p:bus-ref="bus"/>	
+	
+	<bean id="client" factory-bean="clientFactory" factory-method="create"/>
+	
+</beans>

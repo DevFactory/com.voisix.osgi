@@ -14,11 +14,12 @@
 		</core:features>
 	</core:bus>
 	
-	<bean id="systemInfo" class="com.voisix.osgi.examples.cxf.jaxrs.SystemInfoImpl" />
+	
 	<bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider" />
 	<bean id="jacksonProvider" class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider" />
 	
-	
+	<!--
+	<bean id="systemInfo" class="com.voisix.osgi.examples.cxf.jaxrs.SystemInfoImpl" /> 
 	<jaxrs:server id="systemInfoWebService"
 		address="/systemInfo">
 		<jaxrs:serviceBeans>
@@ -28,7 +29,7 @@
 			<ref bean="jacksonProvider"/>
 		</jaxrs:providers>
 	</jaxrs:server>
-	
+	 -->
 	
 	<bean id="systemInfo.proxyFactory" class="org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean"
 		p:address="http://localhost:8181/cxf/systemInfo"

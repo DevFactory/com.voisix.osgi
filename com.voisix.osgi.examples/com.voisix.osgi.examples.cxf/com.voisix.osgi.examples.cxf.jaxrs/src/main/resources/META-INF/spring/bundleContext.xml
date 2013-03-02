@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://cxf.apache.org/core"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:core="http://cxf.apache.org/core"
 	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 
 
@@ -15,7 +17,16 @@
 
 	<bean id="systemInfo" class="com.voisix.osgi.examples.cxf.jaxrs.SystemInfoImpl" />
 	<bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider" />
-	<bean id="jacksonProvider" class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider" />
+	
+	<!-- 
+	<bean id="mapper" class="org.codehaus.jackson.map.ObjectMapper" />
+	
+	<bean id="jacksonProvider" class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider" 
+		c:mapper-ref="mapper" c:annotationsToUse="JACKSON"/>
+		
+	-->
+	<bean id="abstractTypeDeserializer" class="com.voisix.osgi.examples.cxf.jaxrs.AbstractTypeDeserializer"/>
+	<bean id="jacksonProvider" class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider"/>
 	
 	<jaxrs:server id="systemInfoWebService"
 		address="/systemInfo">
@@ -27,4 +38,12 @@
 		</jaxrs:providers>
 	</jaxrs:server>
 	
+	<jaxrs:server id="typeTestWebService" address="/typeTest">
+		<jaxrs:serviceBeans>
+			<bean class="com.voisix.osgi.examples.cxf.jaxrs.TypeTestImpl"/>
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+			<ref bean="jacksonProvider"/>
+		</jaxrs:providers>		
+	</jaxrs:server>
 </beans>

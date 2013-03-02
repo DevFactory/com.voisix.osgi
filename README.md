@@ -55,6 +55,7 @@ install -s mvn:org.springframework.batch/spring-batch-infrastructure/2.1.9.RELEA
 
 install -s mvn:com.voisix.osgi.batch/com.voisix.osgi.batch.core/1.0.0-SNAPSHOT
 
+install -s mvn:com.voisix.osgi.examples.batch/com.voisix.osgi.examples.batch.job.helloworld/1.0.0-SNAPSHOT
 
 Quartz Scheduler
 ================

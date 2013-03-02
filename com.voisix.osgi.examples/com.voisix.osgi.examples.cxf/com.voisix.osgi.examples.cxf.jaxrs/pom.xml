@@ -117,11 +117,19 @@
 							org.apache.cxf.jaxrs.provider.json,
 							org.codehaus.jackson.jaxrs,
 							org.codehaus.jackson.xc,
+							org.codehaus.jackson.map,
 							*
 						</Import-Package>
 						<Spring-Context>META-INF/spring/*;publish-context:=false</Spring-Context>
 						<JAR-Service-Provider>true</JAR-Service-Provider>
 					</instructions>
+				</configuration>
+			</plugin>
+			
+			<plugin>				
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
 				</configuration>
 			</plugin>
 		</plugins>
