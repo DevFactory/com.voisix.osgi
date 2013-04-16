@@ -3,11 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.voisix.osgi.examples.cxf</groupId>
+		<groupId>com.voisix.osgi.examples</groupId>
 		<artifactId>com.voisix.osgi.examples.cxf</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
+	<groupId>com.voisix.osgi.examples.cxf</groupId>
 	<artifactId>com.voisix.osgi.examples.cxf.jaxrs</artifactId>
 	<name>Examples - CXF JAX-RS</name>
 	<packaging>bundle</packaging>

@@ -8,6 +8,7 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	
+	<groupId>com.voisix.osgi.examples</groupId>
 	<artifactId>com.voisix.osgi.examples.batch</artifactId>
 	<packaging>pom</packaging>
 	<name>Batch Examples</name>
