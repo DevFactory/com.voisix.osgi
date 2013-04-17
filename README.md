@@ -15,7 +15,11 @@ feature:install -v spring-jdbc
 
 feature:repo-add mvn:com.voisix.osgi.jdbc/com.voisix.osgi.jdbc.features/1.0.0-SNAPSHOT/xml/features
 
-feature:install -v com.voisix.osgi.jdbc.features 
+feature:install -v com.voisix.osgi.jdbc.features
+
+feature:repo-add mvn:com.voisix.osgi.cache/com.voisix.osgi.cache.features/1.0.0-SNAPSHOT/xml/features
+
+feature:install -v com.voisix.osgi.cache.features  
 
 install -s mvn:com.voisix.osgi/com.voisix.osgi.jmx/1.0.0-SNAPSHOT/war
 

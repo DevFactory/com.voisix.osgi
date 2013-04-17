@@ -3,24 +3,32 @@ package com.voisix.osgi.common;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedServiceFactory;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.osgi.context.BundleContextAware;
 
-public abstract class AbstractManagedServiceFactory implements BundleContextAware, ManagedServiceFactory {
-	
-	protected final Log logger = LogFactory.getLog(getClass());
-	protected final Map<String, ServiceRegistration<?>> serviceRegistrationMap = new HashMap<String, ServiceRegistration<?>>(2);
-	
-    protected BundleContext bundleContext;
+public abstract class AbstractManagedServiceFactory<T> implements BundleContextAware, ManagedServiceFactory {
 
+	private final Map<String, ServiceRegistration<T>> serviceRegistrationMap = new HashMap<String, ServiceRegistration<T>>(2);	
+    private BundleContext bundleContext;
+    
+    protected final Log logger = LogFactory.getLog(getClass());
+    
+    final List<String> serviceInterfaces;
+    
+    public AbstractManagedServiceFactory(List<String> serviceInterfaces) {
+		this.serviceInterfaces = serviceInterfaces;
+	}
+    
 	@Override
 	public String getName() {		
 		return getClass().getName();
@@ -29,15 +37,32 @@ public abstract class AbstractManagedServiceFactory implements BundleContextAwar
 	@Override
 	public void updated(String pid, Dictionary<String, ?> properties) throws ConfigurationException {
 		if (serviceRegistrationMap.containsKey(pid)) {
-			updateService(pid, properties);			
+			final ServiceRegistration<T> serviceRegistration = serviceRegistrationMap.get(pid);
+			final ServiceReference<T> serviceReference = serviceRegistration.getReference();			
+			final T service = bundleContext.getService(serviceReference);
+			updateService(service, properties);	
+			serviceRegistration.setProperties(properties);			
+			logger.info("Updated: " + service.getClass().getName() + properties);	
 		} else {
-			createService(pid, properties);
+			final T service = createService(pid, properties);		
+			@SuppressWarnings("unchecked")
+			ServiceRegistration<T> serviceRegistration = (ServiceRegistration<T>) 			
+				bundleContext.registerService(serviceInterfaces.toArray(new String[] {}), service, properties);			
+			serviceRegistrationMap.put(pid, serviceRegistration);
+			logger.info("Created: " + service.getClass().getName() + properties);			
 		}
 	}
 
 	@Override
 	public void deleted(String pid) {
-		deleteService(pid);
+		final ServiceRegistration<T> serviceRegistration = serviceRegistrationMap.get(pid);
+		final ServiceReference<T> serviceReference = serviceRegistration.getReference();			
+		final T service = bundleContext.getService(serviceReference);
+		final String className = service.getClass().getName();
+		serviceRegistration.unregister();
+		serviceRegistrationMap.remove(pid);
+		deleteService(service);
+		logger.info("Deleted: " + className + "{pid=" + pid + "}");
 	}
 	
 	@Override
@@ -53,8 +78,14 @@ public abstract class AbstractManagedServiceFactory implements BundleContextAwar
 		return propertyValues;
 	}
 
-	protected abstract void createService(String pid, Dictionary<String, ?> properties);	
-	protected abstract void updateService(String pid, Dictionary<String, ?> properties);
-	protected abstract void deleteService(String pid);
-
+	protected final T getService(String pid) {
+		final ServiceRegistration<T> serviceRegistration = serviceRegistrationMap.get(pid);
+		final ServiceReference<T> serviceReference = serviceRegistration.getReference();			
+		final T service = bundleContext.getService(serviceReference);
+		return service;
+	}
+	
+	protected abstract T 	createService(String pid, Dictionary<String, ?> properties) throws ConfigurationException;
+	protected abstract void updateService(T service, Dictionary<String, ?> properties) throws ConfigurationException;
+	protected abstract void deleteService(T service);
 }

@@ -74,7 +74,7 @@
 	</licenses>
 
 	<properties>
-		<karaf.version>3.0.0-SNAPSHOT</karaf.version>
+		<karaf.version>3.0.0.RC1</karaf.version>
 		<mysql.version>5.1.18</mysql.version>
 		<c3p0.version>0.9.1.2</c3p0.version>
 		<ehcache.version>2.6.0_2</ehcache.version>

@@ -19,6 +19,7 @@
 
 	<bean id="cacheManagedServiceFactory"
 		class="com.voisix.osgi.cache.factory.CacheManagedServiceFactory"
+		c:serviceInterfaces="net.sf.ehcache.Ehcache"
 		p:ehCacheManager-ref="cacheManager" />
 
 	<osgi:service ref="cacheManagedServiceFactory"

@@ -1,14 +1,14 @@
 package com.voisix.osgi.cache.factory;
 
 import java.util.Dictionary;
+import java.util.List;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.config.CacheConfiguration;
 
-import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.cm.ConfigurationException;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.PropertyAccessorFactory;
@@ -18,62 +18,49 @@ import org.springframework.cache.ehcache.EhCacheCacheManager;
 import com.voisix.osgi.common.AbstractManagedServiceFactory;
 
 
-public class CacheManagedServiceFactory extends AbstractManagedServiceFactory {
-
+public class CacheManagedServiceFactory extends AbstractManagedServiceFactory<Ehcache> {
+	
 	private EhCacheCacheManager ehCacheManager;
 
-	@Override
-	protected void createService(String pid, Dictionary<String, ?> properties) {
+	public CacheManagedServiceFactory(List<String> serviceInterfaces) {
+		super(serviceInterfaces);
+	}
+	
+	private final CacheConfiguration createCacheConfiguration(Dictionary<String, ?> properties) {
 		final CacheConfiguration cacheConfiguration = new CacheConfiguration();
 		final BeanWrapper beanWrapper 	= PropertyAccessorFactory.forBeanPropertyAccess(cacheConfiguration);
 		final MutablePropertyValues propertyValues = getPropertyValues(properties);
 		beanWrapper.setPropertyValues(propertyValues, true);
-		
+		return cacheConfiguration;
+	}
+
+	@Override
+	protected Ehcache createService(String pid, Dictionary<String, ?> properties)  {
 		final CacheManager cacheManager = ehCacheManager.getCacheManager();
+		final CacheConfiguration cacheConfiguration = createCacheConfiguration(properties);		
 		final Cache cache = new Cache(cacheConfiguration);
 		cache.setCacheManager(cacheManager);
-		cacheManager.addCacheIfAbsent(cache);
-		
-		
-		final ServiceRegistration<Ehcache> serviceRegistration = bundleContext.registerService(Ehcache.class, cache, properties);
-		serviceRegistrationMap.put(pid, serviceRegistration);
-	
-		logger.info("Created: " + cache);
+		cacheManager.addCacheIfAbsent(cache);		
 		ehCacheManager.afterPropertiesSet();
+		return cache;
 	}
 
 	@Override
-	protected void updateService(String pid, Dictionary<String, ?> properties) {
-		final String name = (String) properties.get("name");
-		final CacheManager cacheManager = ehCacheManager.getCacheManager();
-		if (cacheManager.cacheExists(name)) {
-			final Ehcache cache = cacheManager.getCache(name);
-			final CacheConfiguration cacheConfiguration = cache.getCacheConfiguration();
-			final BeanWrapper beanWrapper 	= PropertyAccessorFactory.forBeanPropertyAccess(cacheConfiguration);
-			final MutablePropertyValues propertyValues = getPropertyValues(properties);
-			beanWrapper.setPropertyValues(propertyValues, true);
-			logger.info("Updated: " + cache);
-			ehCacheManager.afterPropertiesSet();
-		}
-		
+	protected void updateService(Ehcache cache, Dictionary<String, ?> properties) throws ConfigurationException {
+		final CacheConfiguration cacheConfiguration = cache.getCacheConfiguration();
+		final BeanWrapper beanWrapper 	= PropertyAccessorFactory.forBeanPropertyAccess(cacheConfiguration);
+		final MutablePropertyValues propertyValues = getPropertyValues(properties);
+		beanWrapper.setPropertyValues(propertyValues, true);			
+		ehCacheManager.afterPropertiesSet();
+		logger.info("Updated: " + cache);			
 	}
-
-	@SuppressWarnings("unchecked")
+	
 	@Override
-	protected void deleteService(String pid) {
-		final ServiceRegistration<Ehcache> serviceRegistration 	= (ServiceRegistration<Ehcache>) serviceRegistrationMap.get(pid);
-		final ServiceReference<Ehcache> serviceReference 		= serviceRegistration.getReference();
-		final CacheManager cacheManager = ehCacheManager.getCacheManager();
-		final Ehcache cache = bundleContext.getService(serviceReference);
-		
+	protected void deleteService(Ehcache cache) {
+		final CacheManager cacheManager = ehCacheManager.getCacheManager();		
 		cacheManager.removeCache(cache.getName());
 		ehCacheManager.getCacheNames().remove(cache.getName());
-		//ehCacheManager.setCacheManager(cacheManager);
 		ehCacheManager.afterPropertiesSet();
-		serviceRegistrationMap.remove(serviceRegistration);
-		serviceRegistration.unregister();
-		logger.info("Deleted: " + cache);
-		
 	}
 
 	public EhCacheCacheManager getEhCacheManager() {
