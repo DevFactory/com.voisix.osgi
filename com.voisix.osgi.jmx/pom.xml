@@ -12,8 +12,8 @@
 
 	<artifactId>com.voisix.osgi.jmx</artifactId>
 	<packaging>war</packaging>
-	<name>JMminiX JMX Console</name>	
-	
+	<name>JMminiX JMX Console</name>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.jminix</groupId>
@@ -23,7 +23,7 @@
 	</dependencies>
 
 	<build>
-		<plugins>		
+		<plugins>
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
@@ -40,7 +40,7 @@
 						<Import-Package>*;resolution:=optional</Import-Package>
 						<Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
 						<Embed-Directory>WEB-INF/lib</Embed-Directory>
-						<Embed-Transitive>true</Embed-Transitive>														
+						<Embed-Transitive>true</Embed-Transitive>
 						<Web-ContextPath>/jmx</Web-ContextPath>
 						<Webapp-Context>/jmx</Webapp-Context>
 						<_wab>src/main/webapp</_wab>
@@ -56,16 +56,17 @@
 					</execution>
 				</executions>
 			</plugin>
-			 
+
 			<plugin>
-				<artifactId>maven-war-plugin</artifactId>					
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1</version>			
 				<configuration>
 					<packagingExcludes>WEB-INF/web.xml</packagingExcludes>
 					<archive>
 						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
 					</archive>
-				</configuration>
-			</plugin> 			
+				</configuration>					
+			</plugin>
 		</plugins>
 	</build>
 </project>

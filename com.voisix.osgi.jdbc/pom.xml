@@ -15,5 +15,6 @@
 		<module>com.voisix.osgi.jdbc.factory</module>
 		<module>com.voisix.osgi.jdbc.fragments</module>
    		<module>com.voisix.osgi.jdbc.features</module>
-  </modules>
+   		<module>com.voisix.osgi.jdbc.test</module>
+	</modules>
 </project>

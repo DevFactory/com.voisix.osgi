@@ -1,7 +1,7 @@
 package com.voisix.osgi.common;
 
-import java.util.Collections;
 import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,8 +72,9 @@ public abstract class AbstractManagedServiceFactory<T> implements BundleContextA
 	
 	protected final MutablePropertyValues getPropertyValues(Dictionary<String, ?> properties) {
 		final MutablePropertyValues propertyValues = new MutablePropertyValues();
-		for (String key : Collections.list(properties.keys())) {				
-			propertyValues.addPropertyValue(key, properties.get(key));				
+		for (final Enumeration<String> e = properties.keys(); e.hasMoreElements(); ) {
+			final String key = e.nextElement();
+			propertyValues.addPropertyValue(key, properties.get(key));
 		}
 		return propertyValues;
 	}
@@ -88,4 +89,5 @@ public abstract class AbstractManagedServiceFactory<T> implements BundleContextA
 	protected abstract T 	createService(String pid, Dictionary<String, ?> properties) throws ConfigurationException;
 	protected abstract void updateService(T service, Dictionary<String, ?> properties) throws ConfigurationException;
 	protected abstract void deleteService(T service);
+	
 }
