@@ -1,12 +1,9 @@
 package com.voisix.osgi.jdbc.test;
 
-import static org.apache.karaf.tooling.exam.options.KarafDistributionOption.karafDistributionConfiguration;
-import static org.apache.karaf.tooling.exam.options.KarafDistributionOption.logLevel;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-import static org.ops4j.pax.exam.CoreOptions.maven;
-import static org.ops4j.pax.exam.CoreOptions.options;
-import static org.ops4j.pax.exam.CoreOptions.scanFeatures;
+import static org.apache.karaf.tooling.exam.options.KarafDistributionOption.*;
+import static org.ops4j.pax.exam.CoreOptions.*;
+import static org.junit.Assert.*;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -69,7 +66,9 @@ public class DataSourceManagedServiceFactoryTest {
 //				new KarafDistributionConfigurationFileReplacementOption(
 //						"deploy/javax.sql.DataSource-SimpleDriverDataSource.cfg", 
 //						new File("src/test/resources/javax.sql.DataSource-SimpleDriverDataSource.cfg")),
-				logLevel(LogLevel.WARN)
+				logLevel(LogLevel.INFO)
+				// debugConfiguration()
+				// keepRuntimeFolder()
 				);
 	}
 	
