@@ -97,6 +97,10 @@
 					<groupId>org.eclipse</groupId>
 					<artifactId>osgi</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.equinox</groupId>
+					<artifactId>region</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 	</dependencies>
