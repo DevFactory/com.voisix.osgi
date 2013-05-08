@@ -27,7 +27,7 @@
 
 	<name>JDBC Features Assembly</name>
 
-	<build>		
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.karaf.tooling</groupId>
@@ -54,7 +54,7 @@
 					</execution>
 				</executions>
 			</plugin>
-		</plugins>		
+		</plugins>
 	</build>
 
 	<dependencies>
@@ -63,33 +63,33 @@
 			<artifactId>com.voisix.osgi.common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.voisix.osgi.jdbc</groupId>
 			<artifactId>com.voisix.osgi.jdbc.factory</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.voisix.osgi.jdbc.fragments</groupId>
 			<artifactId>com.voisix.osgi.jdbc.fragments.c3p0</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
-		<!-- 
+
+		<!-- was commented -->
 		<dependency>
 			<groupId>com.voisix.osgi.jdbc.fragments</groupId>
 			<artifactId>com.voisix.osgi.jdbc.fragments.spring</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		 -->
 		
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.mchange.c3p0</groupId>
 			<artifactId>com.springsource.com.mchange.v2.c3p0</artifactId>
@@ -112,6 +112,16 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 		</dependency>
-				
+
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jta_1.1_spec</artifactId>			
+		</dependency>
+		
+		<!-- H2 Database -->		
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>		 
 	</dependencies>
 </project>
