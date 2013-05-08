@@ -84,7 +84,7 @@ public class DataSourceManagedServiceFactoryTest {
 			properties.put("username",			"root");
 			properties.put("password",			"");
 			configuration.update(properties);
-			Thread.sleep(3000);			
+			Thread.sleep(10000);			
 			test();
 		} catch (IOException e) {
 			logger.error(e.getMessage(), e);
