@@ -59,6 +59,17 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jta_1.1_spec</artifactId>			
+		</dependency>
+		
+		<!-- H2 Database -->		
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>		 
+	
+		<dependency>
 			<groupId>com.voisix.osgi</groupId>
 			<artifactId>com.voisix.osgi.common</artifactId>
 			<version>${project.version}</version>
@@ -112,16 +123,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>org.apache.geronimo.specs</groupId>
-			<artifactId>geronimo-jta_1.1_spec</artifactId>			
-		</dependency>
 		
-		<!-- H2 Database -->		
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-		</dependency>		 
 	</dependencies>
 </project>
