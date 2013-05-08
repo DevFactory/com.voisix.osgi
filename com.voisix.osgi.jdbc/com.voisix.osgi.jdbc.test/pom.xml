@@ -92,16 +92,6 @@
 			<version>3.0.0.RC1</version>
 			<type>zip</type>
 			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.eclipse</groupId>
-					<artifactId>osgi</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.equinox</groupId>
-					<artifactId>region</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 	</dependencies>
 
