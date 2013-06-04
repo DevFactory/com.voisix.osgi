@@ -9,9 +9,11 @@
 		http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+	<osgi:reference id="eventAdmin" interface="org.osgi.service.event.EventAdmin"/>
 
 	<bean id="dataSourceManagedServiceFactory" class="com.voisix.osgi.jdbc.factory.DataSourceManagedServiceFactory"
-		c:serviceInterfaces="javax.sql.DataSource"/>
+		c:serviceInterfaces="javax.sql.DataSource"
+		p:eventAdmin-ref="eventAdmin"/>
 				
 	<osgi:service ref="dataSourceManagedServiceFactory" interface="org.osgi.service.cm.ManagedServiceFactory">		
 		<osgi:service-properties>

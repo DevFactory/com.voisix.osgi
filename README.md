@@ -13,6 +13,8 @@ feature:install -v spring-dm
 
 feature:install -v spring-jdbc 
 
+feature:install -v eventadmin
+
 feature:repo-add mvn:com.voisix.osgi.jdbc/com.voisix.osgi.jdbc.features/1.0.0-SNAPSHOT/xml/features
 
 feature:install -v com.voisix.osgi.jdbc.features

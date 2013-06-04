@@ -40,6 +40,7 @@
 						<Export-Package>com.voisix.osgi.jdbc.factory*;version=${project.version}</Export-Package>
 						<Import-Package>
 							org.osgi.service.cm,
+							org.osgi.service.event,
 							com.mysql.jdbc; resolution:="optional",							
 							org.springframework.jdbc.datasource; resolution:="optional",
 							com.mchange.v2.c3p0; resolution:="optional",
