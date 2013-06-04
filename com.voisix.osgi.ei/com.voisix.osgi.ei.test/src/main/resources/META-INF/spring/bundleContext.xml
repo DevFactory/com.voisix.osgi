@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camel="http://camel.apache.org/schema/spring"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring-2.0-M1.xsd">
+
+	<!-- This is the persistent repository to store aggregated messages -->
+	<!-- 
+	<bean id="movingAverageRepository"
+		class="org.apache.camel.component.hawtdb.HawtDBAggregationRepository">
+		<property name="persistentFileName" value="data/hawtdb.dat" />
+		<property name="repositoryName" value="movingAverageRepository" />
+		<property name="bufferSize" value="602400" />
+	</bean>
+ 	-->
+ 	
+ 	<bean id="averageListProcessor" class="com.voisix.osgi.ei.processors.AverageListProcessor"/>
+
+	<bean id="arrayListAggregationStrategy" class="com.voisix.osgi.ei.strategies.ArrayListAggregationStrategy"/>
+	<bean id="sumListProcessor" class="com.voisix.osgi.ei.processors.SumListProcessor"/>
+
+	<camel:camelContext id="com.voisix.osgi.ei.test">
+	
+		<camel:route id="timer.random.boolean" autoStartup="false">
+			<camel:from uri="timer:timer1?fixedRate=true&amp;period=1000" />
+			<camel:to uri="direct:random.boolean"/>
+		</camel:route>
+		
+		<camel:route id="timer.random.integer" autoStartup="false">
+			<camel:from uri="timer:timer1?fixedRate=true&amp;period=1000" />
+			<camel:to uri="direct:random.integer"/>
+		</camel:route>
+		
+		<camel:route id="timer.random.integer.aggregation" autoStartup="false">
+			<camel:from uri="timer:timer1?fixedRate=true&amp;period=1000" />
+			<camel:to uri="direct:random.integer"/>
+			<camel:multicast>
+				<camel:to uri="direct:sum"/>
+				<camel:to uri="direct:average"/>
+			</camel:multicast>
+		</camel:route>
+		
+	
+		<camel:route id="random.boolean">
+			<camel:from uri="direct:random.boolean" />
+			<camel:to uri="random:integer?range=2" />			
+			<camel:transform>
+				<camel:javaScript>request.body > 0</camel:javaScript>
+			</camel:transform>
+			<camel:to uri="log:random.boolean?level=INFO" />
+		</camel:route>
+		
+		<camel:route id="random.integer">
+			<camel:from uri="direct:random.integer" />
+			<camel:to uri="random:integer?range=100" />
+			<camel:to uri="log:random.integer?level=INFO" />			
+		</camel:route>
+		
+		<camel:route id="aggregate.sum">
+			<camel:from uri="direct:sum"/>
+			<camel:aggregate strategyRef="arrayListAggregationStrategy" completionSize="5">
+				<camel:description>SUM aggregation</camel:description>
+				<camel:correlationExpression>
+					<camel:constant>true</camel:constant>
+				</camel:correlationExpression>
+				<camel:to uri="log:aggregate.sum?level=DEBUG" />
+				<camel:process ref="sumListProcessor"/>
+				<camel:to uri="log:aggregate.sum?level=INFO" />
+			</camel:aggregate>
+		</camel:route>
+
+		<camel:route id="aggregate.average">
+			<camel:from uri="direct:average"/>
+			<camel:aggregate strategyRef="arrayListAggregationStrategy" completionSize="5">
+				<camel:description>Average aggregation</camel:description>
+				<camel:correlationExpression>
+					<camel:constant>true</camel:constant>
+				</camel:correlationExpression>
+				<camel:to uri="log:aggregate.average?level=DEBUG" />
+				<camel:process ref="averageListProcessor"/>
+				<camel:to uri="log:aggregate.average?level=INFO" />
+			</camel:aggregate>			
+		</camel:route>
+	</camel:camelContext>
+</beans>

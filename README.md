@@ -67,3 +67,9 @@ Quartz Scheduler
 ================
 
 install -s mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.quartz/2.1.6_1
+
+
+Camel EI
+========
+
+feature:repo-add mvn:org.apache.camel.karaf/apache-camel/2.11.0/xml/features
