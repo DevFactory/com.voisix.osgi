@@ -102,7 +102,7 @@
 		
 		<felix.plugin.version>2.3.7</felix.plugin.version>
 
-		<pax.wicket.version>2.1.0</pax.wicket.version>
+		<pax.wicket.version>3.0.0-SNAPSHOT</pax.wicket.version>
 		<pax.exam.version>2.6.0</pax.exam.version>
 		<pax.logging.version>1.7.0</pax.logging.version>
 		

@@ -78,12 +78,15 @@ feature:repo-add mvn:org.apache.camel.karaf/apache-camel/2.11.0/xml/features
 PAX-Wicket
 ==========
 
-feature:repo-add mvn:org.ops4j.pax.wicket/features/2.1.0/xml/features
-feature:repo-add mvn:org.ops4j.pax.wicket.samples/features/2.1.0/xml/features
+feature:repo-add mvn:org.ops4j.pax.wicket/features/3.0.0-SNAPSHOT/xml/features
+feature:repo-add mvn:org.ops4j.pax.wicket.samples/features/3.0.0-SNAPSHOT/xml/features
 
 feature:install -v wicket
 feature:install -v pax-wicket
 feature:install -v pax-wicket-spring
+
+install -s mvn:org.apache.wicket/wicket-native-websocket-core/0.6
+install -s mvn:org.apache.wicket/wicket-native-websocket-jetty/0.6
 
 install -s mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.javax-inject/1_2
 

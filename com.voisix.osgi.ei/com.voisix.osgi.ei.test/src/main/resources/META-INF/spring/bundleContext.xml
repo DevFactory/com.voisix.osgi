@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camel="http://camel.apache.org/schema/spring"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:camel="http://camel.apache.org/schema/spring"
 	xmlns:c="http://www.springframework.org/schema/c"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xsi:schemaLocation="http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://camel.apache.org/schema/osgi http://camel.apache.org/schema/osgi/camel-osgi-2.0-M1.xsd
 		http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring-2.0-M1.xsd">
 
 	<!-- This is the persistent repository to store aggregated messages -->
@@ -15,6 +19,12 @@
 	</bean>
  	-->
  	
+ 	<osgi:reference id="label.randomInteger"
+ 		cardinality="0..1" 
+ 		interface="org.apache.wicket.model.IModel" 
+ 		filter="(org.springframework.osgi.bean.name=label.randomInteger)"> 		
+ 	</osgi:reference>
+ 	
  	<bean id="integerArrayListAggregationStrategy"	class="com.voisix.osgi.ei.strategies.IntegerArrrayListAggregationStrategy" scope="prototype"/>
  	<bean id="integerArrayListAverageProcessor" 	class="com.voisix.osgi.ei.processors.IntegerArrayListAverageProcessor" scope="prototype"/>
  	<bean id="integerArrayListSumProcessor" 		class="com.voisix.osgi.ei.processors.IntegerArrayListSumProcessor" scope="prototype"/>
@@ -22,6 +32,11 @@
 	
 
 	<camel:camelContext id="com.voisix.osgi.ei.test">
+		<camel:route id="timer.random.integer.label" autoStartup="false">
+			<camel:from uri="timer:timer1?fixedRate=true&amp;period=1000" />
+			<camel:to uri="direct:random.integer"/>
+			<camel:bean ref="label.randomInteger" method="setObject"/>
+		</camel:route>
 	
 		<camel:route id="timer.random.boolean" autoStartup="false">
 			<camel:from uri="timer:timer1?fixedRate=true&amp;period=1000" />

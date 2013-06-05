@@ -10,25 +10,11 @@
 			<entry key="pax.wicket.applicationname" value="com.voisix.osgi.web.wicket.application" />
 			<entry key="pax.wicket.mountpoint" value="/wicket/application" />
 		</osgi:service-properties>
+		<bean class="com.voisix.osgi.web.wicket.application.CustomWebApplicationFactory" 
+			p:wicketApplication="com.voisix.osgi.web.wicket.application.WicketApplication"/>		 					
+	</osgi:service>
 
-		<bean class="org.ops4j.pax.wicket.util.SimpleWebApplicationFactory"
-			p:wicketApplication="com.voisix.osgi.web.wicket.application.WicketApplication"/>			
-	</osgi:service>
-	
-	<!-- 
-	<bean id="helloWorldString" class="java.lang.String"><constructor-arg index="0"><value>Hello World</value></constructor-arg></bean>
-	 -->
-	 
-	<bean id="labelModel"
-		name="labelModel"
-		class="org.apache.wicket.model.Model" 
-		c:object="helloWorldString"/>
-	
-	<!-- 
-	<osgi:service id="labelModelService" ref="labelModel" interface="org.apache.wicket.model.IModel">
-		<osgi:service-properties>
-			<entry key="id" value="labelId"/>
-		</osgi:service-properties>
-	</osgi:service>
-	 -->
+	<bean id="label.randomInteger" class="org.apache.wicket.model.Model"  c:object="A Random Integer"/>
+
+	<osgi:service id="label.randomInteger.service" ref="label.randomInteger" interface="org.apache.wicket.model.IModel"/>	
 </beans>
