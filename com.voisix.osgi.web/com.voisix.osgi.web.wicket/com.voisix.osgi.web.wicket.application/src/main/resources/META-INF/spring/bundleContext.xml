@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xsi:schemaLocation="http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<osgi:service interface="org.ops4j.pax.wicket.api.WebApplicationFactory">
+		<osgi:service-properties>
+			<entry key="pax.wicket.applicationname" value="com.voisix.osgi.web.wicket.application" />
+			<entry key="pax.wicket.mountpoint" value="/wicket/application" />
+		</osgi:service-properties>
+
+		<bean class="org.ops4j.pax.wicket.util.SimpleWebApplicationFactory"
+			p:wicketApplication="com.voisix.osgi.web.wicket.application.WicketApplication"/>			
+	</osgi:service>
+</beans>

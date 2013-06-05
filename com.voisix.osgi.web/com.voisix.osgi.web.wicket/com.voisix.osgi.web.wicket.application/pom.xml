@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.voisix.osgi.web</groupId>
+		<artifactId>com.voisix.osgi.web.wicket</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.voisix.osgi.web.wicket</groupId>
+	<artifactId>com.voisix.osgi.web.wicket.application</artifactId>
+	<packaging>bundle</packaging>
+
+	<name>WEB Wicket Application Bundle</name>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<configuration>
+					<instructions>
+						<Import-Package>
+							org.apache.wicket,
+							org.apache.wicket.ajax,
+							org.apache.wicket.core.request.mapper,							
+							org.apache.wicket.util,
+							org.apache.wicket.event,
+							org.apache.wicket.page,
+							org.apache.wicket.request.resource,
+							org.apache.wicket.request.cycle,
+							org.apache.wicket.request.mapper,
+							org.apache.wicket.markup.html,
+							org.apache.wicket.markup.html.basic,
+							org.apache.wicket.protocol.http,
+							org.apache.wicket.settings,
+							org.apache.wicket.session,
+							org.apache.wicket.util.file,
+							org.apache.wicket.request,
+							org.apache.wicket.request.http,
+													
+							org.ops4j.pax.wicket.api,													
+							org.ops4j.pax.wicket.util,
+							org.ops4j.pax.wicket.util.proxy,
+
+							net.sf.cglib.proxy;version="[2,3)",
+							net.sf.cglib.core;version="[2,3)",
+							net.sf.cglib.reflect;version="[2,3)",
+
+							javax.servlet;version="2.5.0",
+							javax.servlet.http;version="2.5.0",
+							*
+						</Import-Package>
+						<Spring-Context>META-INF/spring/*;publish-context:=false</Spring-Context>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	
+</project>

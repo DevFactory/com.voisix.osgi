@@ -15,11 +15,10 @@
 	</bean>
  	-->
  	
- 	<bean id="averageListProcessor" class="com.voisix.osgi.ei.processors.AverageListProcessor"/>
-
-	<bean id="integerArrayListAggregationStrategy" class="com.voisix.osgi.ei.strategies.IntegerArrrayListAggregationStrategy"/>
-	<bean id="sumListProcessor" class="com.voisix.osgi.ei.processors.SumListProcessor"/>
-	<bean id="valueChangedProcessor" class="com.voisix.osgi.ei.processors.ValueChangedProcessor" scope="prototype"/>
+ 	<bean id="integerArrayListAggregationStrategy"	class="com.voisix.osgi.ei.strategies.IntegerArrrayListAggregationStrategy" scope="prototype"/>
+ 	<bean id="integerArrayListAverageProcessor" 	class="com.voisix.osgi.ei.processors.IntegerArrayListAverageProcessor" scope="prototype"/>
+ 	<bean id="integerArrayListSumProcessor" 		class="com.voisix.osgi.ei.processors.IntegerArrayListSumProcessor" scope="prototype"/>
+	<bean id="valueChangedProcessor" 				class="com.voisix.osgi.ei.processors.ValueChangedProcessor" scope="prototype"/>
 	
 
 	<camel:camelContext id="com.voisix.osgi.ei.test">
@@ -87,7 +86,7 @@
 					<camel:constant>true</camel:constant>
 				</camel:correlationExpression>
 				<camel:to uri="log:aggregate.sum?level=DEBUG" />
-				<camel:process ref="sumListProcessor"/>
+				<camel:process ref="integerArrayListSumProcessor"/>
 				<camel:to uri="log:aggregate.sum?level=INFO" />
 			</camel:aggregate>
 		</camel:route>
@@ -100,7 +99,7 @@
 					<camel:constant>true</camel:constant>
 				</camel:correlationExpression>
 				<camel:to uri="log:aggregate.average?level=DEBUG" />
-				<camel:process ref="averageListProcessor"/>
+				<camel:process ref="integerArrayListAverageProcessor"/>
 				<camel:to uri="log:aggregate.average?level=INFO" />
 			</camel:aggregate>			
 		</camel:route>

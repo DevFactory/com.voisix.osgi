@@ -102,8 +102,11 @@
 		
 		<felix.plugin.version>2.3.7</felix.plugin.version>
 
+		<pax.wicket.version>2.1.0</pax.wicket.version>
 		<pax.exam.version>2.6.0</pax.exam.version>
 		<pax.logging.version>1.7.0</pax.logging.version>
+		
+		<wicket.version>6.5.0</wicket.version>
 
 		<karaf.version>3.0.0.RC1</karaf.version>
 		
@@ -144,6 +147,7 @@
 		<module>com.voisix.osgi.batch</module>
 		<module>com.voisix.osgi.quartz</module>
 		<module>com.voisix.osgi.ei</module>
+		<module>com.voisix.osgi.web</module>
 	</modules>
 
 	<build>

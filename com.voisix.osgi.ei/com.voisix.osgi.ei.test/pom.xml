@@ -11,24 +11,24 @@
 	<packaging>bundle</packaging>
 
 	<name>EI Features test</name>
-	
+
 	<build>
 		<plugins>
 			<plugin>
-                    <groupId>org.apache.felix</groupId>
-                    <artifactId>maven-bundle-plugin</artifactId>                    
-                    <extensions>true</extensions>
-                    <configuration>
-                        <instructions>
-                            <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                            <Export-Package>${project.groupId}*;version=${project.version}</Export-Package>
-                            <_versionpolicy>${bnd.version.policy}</_versionpolicy>                            
-                        </instructions>
-                    </configuration>
-                </plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Export-Package>${project.groupId}*;version=${project.version}</Export-Package>
+						<_versionpolicy>${bnd.version.policy}</_versionpolicy>
+					</instructions>
+				</configuration>
+			</plugin>	
 		</plugins>
 	</build>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.osgi</groupId>
@@ -58,26 +58,30 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-spring</artifactId>
 			<version>${camel.version}</version>
-			<scope>provided</scope>					
 		</dependency>
 		
 		<dependency>
 			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-script</artifactId>
+			<version>${camel.version}</version>
+		</dependency>		
+
+		<dependency>
+			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-hawtdb</artifactId>
 			<version>${camel.version}</version>
-			<scope>provided</scope>					
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.google.code.scriptengines</groupId>
 			<artifactId>scriptengines-javascript</artifactId>
 			<version>1.1</version>
 		</dependency>
 	</dependencies>
-	
+
 </project>

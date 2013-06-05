@@ -73,3 +73,19 @@ Camel EI
 ========
 
 feature:repo-add mvn:org.apache.camel.karaf/apache-camel/2.11.0/xml/features
+
+
+PAX-Wicket
+==========
+
+feature:repo-add mvn:org.ops4j.pax.wicket/features/2.1.0/xml/features
+feature:repo-add mvn:org.ops4j.pax.wicket.samples/features/2.1.0/xml/features
+
+feature:install -v wicket
+feature:install -v pax-wicket
+feature:install -v pax-wicket-spring
+
+install -s mvn:org.ops4j.pax.wicket.samples.springdm/org.ops4j.pax.wicket.samples.springdm.simple/2.1.0
+
+install -s mvn:com.voisix.osgi.web.wicket/com.voisix.osgi.web.wicket.application/1.0.0-SNAPSHOT
+
