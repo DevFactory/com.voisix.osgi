@@ -53,7 +53,7 @@
 							javax.servlet.http;version="2.5.0",
 							*
 						</Import-Package>
-						<Spring-Context>META-INF/spring/*;publish-context:=false</Spring-Context>
+						<Spring-Context>META-INF/spring/*;publish-context:=true</Spring-Context>
 					</instructions>
 				</configuration>
 			</plugin>
