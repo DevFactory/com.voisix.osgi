@@ -29,7 +29,7 @@ public abstract class AbstractManagedServiceFactory<T> implements BundleContextA
     protected final Log logger = LogFactory.getLog(getClass());
     
     final List<String> serviceInterfaces;
-    private final Set<String> eventTopics = new HashSet<>();
+    private final Set<String> eventTopics = new HashSet<String>();
     
     private EventAdmin eventAdmin;
     

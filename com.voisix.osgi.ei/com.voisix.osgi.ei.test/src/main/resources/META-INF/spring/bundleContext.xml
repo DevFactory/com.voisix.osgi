@@ -17,14 +17,31 @@
  	
  	<bean id="averageListProcessor" class="com.voisix.osgi.ei.processors.AverageListProcessor"/>
 
-	<bean id="arrayListAggregationStrategy" class="com.voisix.osgi.ei.strategies.ArrayListAggregationStrategy"/>
+	<bean id="integerArrayListAggregationStrategy" class="com.voisix.osgi.ei.strategies.IntegerArrrayListAggregationStrategy"/>
 	<bean id="sumListProcessor" class="com.voisix.osgi.ei.processors.SumListProcessor"/>
+	<bean id="valueChangedProcessor" class="com.voisix.osgi.ei.processors.ValueChangedProcessor" scope="prototype"/>
+	
 
 	<camel:camelContext id="com.voisix.osgi.ei.test">
 	
 		<camel:route id="timer.random.boolean" autoStartup="false">
 			<camel:from uri="timer:timer1?fixedRate=true&amp;period=1000" />
 			<camel:to uri="direct:random.boolean"/>
+			<camel:to uri="direct:aggregate.value.changed" />
+			<camel:choice>
+				<camel:when>
+					<camel:simple>${in.body}</camel:simple>
+					<camel:transform>					
+						<camel:simple>[changedTimestamp ${in.header.changedTimestamp}]</camel:simple>						 
+					</camel:transform>					
+				</camel:when>
+				<camel:otherwise>
+					<camel:transform>
+						<camel:simple>[timeSinceLastChange: ${in.header.timeSinceLastChange}]</camel:simple>
+					</camel:transform>
+				</camel:otherwise>
+			</camel:choice>
+			<camel:to uri="log:change?level=INFO"/>
 		</camel:route>
 		
 		<camel:route id="timer.random.integer" autoStartup="false">
@@ -41,14 +58,13 @@
 			</camel:multicast>
 		</camel:route>
 		
-	
 		<camel:route id="random.boolean">
 			<camel:from uri="direct:random.boolean" />
 			<camel:to uri="random:integer?range=2" />			
 			<camel:transform>
 				<camel:javaScript>request.body > 0</camel:javaScript>
 			</camel:transform>
-			<camel:to uri="log:random.boolean?level=INFO" />
+			<camel:to uri="log:random.boolean?level=INFO" />			
 		</camel:route>
 		
 		<camel:route id="random.integer">
@@ -57,9 +73,15 @@
 			<camel:to uri="log:random.integer?level=INFO" />			
 		</camel:route>
 		
+		<camel:route id="aggregate.value.changed">
+			<camel:from uri="direct:aggregate.value.changed"/>
+			<camel:process ref="valueChangedProcessor"/>
+			<camel:to uri="log:aggregation.value.changed?level=TRACE"/>			
+		</camel:route>
+		
 		<camel:route id="aggregate.sum">
 			<camel:from uri="direct:sum"/>
-			<camel:aggregate strategyRef="arrayListAggregationStrategy" completionSize="5">
+			<camel:aggregate strategyRef="integerArrayListAggregationStrategy" completionSize="5">
 				<camel:description>SUM aggregation</camel:description>
 				<camel:correlationExpression>
 					<camel:constant>true</camel:constant>
@@ -72,7 +94,7 @@
 
 		<camel:route id="aggregate.average">
 			<camel:from uri="direct:average"/>
-			<camel:aggregate strategyRef="arrayListAggregationStrategy" completionSize="5">
+			<camel:aggregate strategyRef="integerArrayListAggregationStrategy" completionSize="5">
 				<camel:description>Average aggregation</camel:description>
 				<camel:correlationExpression>
 					<camel:constant>true</camel:constant>
