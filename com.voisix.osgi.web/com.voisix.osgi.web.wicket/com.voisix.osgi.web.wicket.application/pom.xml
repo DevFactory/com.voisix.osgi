@@ -47,7 +47,8 @@
 							net.sf.cglib.proxy;version="[2,3)",
 							net.sf.cglib.core;version="[2,3)",
 							net.sf.cglib.reflect;version="[2,3)",
-
+							
+							javax.inject,
 							javax.servlet;version="2.5.0",
 							javax.servlet.http;version="2.5.0",
 							*

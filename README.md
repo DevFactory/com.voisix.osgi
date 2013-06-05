@@ -85,6 +85,8 @@ feature:install -v wicket
 feature:install -v pax-wicket
 feature:install -v pax-wicket-spring
 
+install -s mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.javax-inject/1_2
+
 install -s mvn:org.ops4j.pax.wicket.samples.springdm/org.ops4j.pax.wicket.samples.springdm.simple/2.1.0
 
 install -s mvn:com.voisix.osgi.web.wicket/com.voisix.osgi.web.wicket.application/1.0.0-SNAPSHOT
