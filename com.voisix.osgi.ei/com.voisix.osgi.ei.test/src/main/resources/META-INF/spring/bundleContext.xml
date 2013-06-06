@@ -19,10 +19,22 @@
 	</bean>
  	-->
  	
- 	<osgi:reference id="label.randomInteger"
+ 	<osgi:reference id="randomIntegerModel"
  		cardinality="0..1" 
  		interface="org.apache.wicket.model.IModel" 
- 		filter="(org.springframework.osgi.bean.name=label.randomInteger)"> 		
+ 		filter="(org.springframework.osgi.bean.name=randomIntegerModel)"> 		
+ 	</osgi:reference>
+ 	
+ 	<osgi:reference id="sumIntegerModel"
+ 		cardinality="0..1" 
+ 		interface="org.apache.wicket.model.IModel" 
+ 		filter="(org.springframework.osgi.bean.name=sumIntegerModel)"> 		
+ 	</osgi:reference>
+ 	
+ 	<osgi:reference id="avgIntegerModel"
+ 		cardinality="0..1" 
+ 		interface="org.apache.wicket.model.IModel" 
+ 		filter="(org.springframework.osgi.bean.name=avgIntegerModel)"> 		
  	</osgi:reference>
  	
  	<bean id="integerArrayListAggregationStrategy"	class="com.voisix.osgi.ei.strategies.IntegerArrrayListAggregationStrategy" scope="prototype"/>
@@ -32,10 +44,33 @@
 	
 
 	<camel:camelContext id="com.voisix.osgi.ei.test">
-		<camel:route id="timer.random.integer.label" autoStartup="false">
+		
+		<camel:route id="timer.random.integer.test" autoStartup="false">
 			<camel:from uri="timer:timer1?fixedRate=true&amp;period=1000" />
-			<camel:to uri="direct:random.integer"/>
-			<camel:bean ref="label.randomInteger" method="setObject"/>
+			<camel:to 	uri="direct:random.integer"/>
+			<camel:bean ref="randomIntegerModel" method="setObject"/>
+			 
+			<camel:multicast>
+			
+				<camel:aggregate strategyRef="integerArrayListAggregationStrategy" completionSize="5">
+					<camel:description>SUM aggregation</camel:description>
+					<camel:correlationExpression>
+						<camel:constant>true</camel:constant>
+					</camel:correlationExpression>					
+					<camel:process ref="integerArrayListSumProcessor"/>
+					<camel:bean ref="sumIntegerModel" method="setObject"/>
+				</camel:aggregate>
+				
+				<camel:aggregate strategyRef="integerArrayListAggregationStrategy" completionSize="5">
+					<camel:description>Average aggregation</camel:description>
+					<camel:correlationExpression>
+						<camel:constant>true</camel:constant>
+					</camel:correlationExpression>					
+					<camel:process ref="integerArrayListAverageProcessor"/>
+					<camel:bean ref="avgIntegerModel" method="setObject"/>
+				</camel:aggregate>	
+				
+			</camel:multicast>			 
 		</camel:route>
 	
 		<camel:route id="timer.random.boolean" autoStartup="false">

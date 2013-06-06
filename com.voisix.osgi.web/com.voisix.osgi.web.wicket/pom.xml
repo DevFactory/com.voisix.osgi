@@ -17,6 +17,12 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>6.0</version>
+		</dependency>
+		
+		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.core</artifactId>
 			<scope>provided</scope>
@@ -65,6 +71,15 @@
 			<version>${wicket.version}</version>
 		</dependency>
 		
+		
+
+		<dependency>
+			<groupId>org.ops4j.pax.wicket</groupId>
+			<artifactId>org.ops4j.pax.wicket.service</artifactId>
+			<version>${pax.wicket.version}</version>
+		</dependency>
+		
+		<!-- 
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-native-websocket-core</artifactId>
@@ -76,12 +91,6 @@
 			<artifactId>wicket-native-websocket-jetty</artifactId>
 			<version>0.6</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.ops4j.pax.wicket</groupId>
-			<artifactId>org.ops4j.pax.wicket.service</artifactId>
-			<version>${pax.wicket.version}</version>
-		</dependency>
 		
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
@@ -89,11 +98,6 @@
 			<version>8.1.9.v20130131</version>
 			<scope>provided</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>6.0</version>
-		</dependency>
+		 -->		
 	</dependencies>
 </project>
