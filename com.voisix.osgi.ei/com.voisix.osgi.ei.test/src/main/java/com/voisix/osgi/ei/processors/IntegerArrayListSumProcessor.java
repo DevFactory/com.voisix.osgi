@@ -1,6 +1,7 @@
 package com.voisix.osgi.ei.processors;
 
-import java.util.ArrayList;
+import java.util.AbstractCollection;
+import java.util.Collection;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
@@ -11,12 +12,11 @@ public class IntegerArrayListSumProcessor implements Processor {
 	@Override
 	public void process(Exchange exchange) throws Exception {		
 		final Message in = exchange.getIn();
-		final ArrayList<?> list = in.getBody(ArrayList.class);
+		final Collection<?> list = in.getBody(AbstractCollection.class);
 		Integer total = 0;
 		for (Object value : list) {
 			total = total + (Integer) value;
 		}
 		in.setBody(total);
 	}
-
 }

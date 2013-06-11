@@ -21,11 +21,21 @@
 				<configuration>
 					<instructions>
 						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-						<Export-Package>${project.groupId}*;version=${project.version}</Export-Package>
+						<Export-Package>
+							com.voisix.osgi.ei.processors;version=${project.version},
+							com.voisix.osgi.ei.*;version=${project.version}
+						</Export-Package>
 						<_versionpolicy>${bnd.version.policy}</_versionpolicy>
+						<Import-Package>
+							groovy.lang,
+							org.codehaus.groovy.runtime,
+							org.codehaus.groovy.runtime.callsite,
+							org.codehaus.groovy.reflection,
+							*
+						</Import-Package>
 					</instructions>
 				</configuration>
-			</plugin>	
+			</plugin>
 		</plugins>
 	</build>
 
@@ -64,12 +74,12 @@
 			<artifactId>camel-spring</artifactId>
 			<version>${camel.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-script</artifactId>
 			<version>${camel.version}</version>
-		</dependency>		
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.camel</groupId>
@@ -87,6 +97,27 @@
 			<artifactId>wicket-core</artifactId>
 			<version>${wicket.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-pool</artifactId>
+			<version>5.8.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-camel</artifactId>
+			<version>5.8.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.servicemix.bundles</groupId>
+			<artifactId>org.apache.servicemix.bundles.commons-collections</artifactId>
+			<version>3.2.1_3</version>
+		</dependency>
+		
 	</dependencies>
 
 </project>

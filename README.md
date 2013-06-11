@@ -68,12 +68,27 @@ Quartz Scheduler
 
 install -s mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.quartz/2.1.6_1
 
+Active MQ
+=========
+feature:repo-add mvn:org.apache.activemq/activemq-karaf/5.8.0/xml/features
+feature:install -v activemq-client
+feature:install -v activemq-web-console 
+
 
 Camel EI
 ========
 
-feature:repo-add mvn:org.apache.camel.karaf/apache-camel/2.11.0/xml/features
 
+feature:repo-add mvn:org.apache.camel.karaf/apache-camel/2.11.0/xml/features
+feature:install -v camel-jms
+feature:install -v camel-spring
+feature:install -v camel-script
+feature:install -v camel-script-javascript
+feature:install -v camel-groovy
+feature:install -v camel-script-groovy 
+
+#install -s mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.commons-collections/3.2.1_3
+install -s mvn:com.voisix.osgi.ei/com.voisix.osgi.ei.test/1.0.0-SNAPSHOT
 
 PAX-Wicket
 ==========
@@ -94,3 +109,9 @@ install -s mvn:org.ops4j.pax.wicket.samples.springdm/org.ops4j.pax.wicket.sample
 
 install -s mvn:com.voisix.osgi.web.wicket/com.voisix.osgi.web.wicket.application/1.0.0-SNAPSHOT
 
+
+Restlet Framework
+=================
+
+install -s mvn:org.restlet.jee/org.restlet.ext.servlet/2.0.15
+install -s mvn:org.restlet.jee/org.restlet.ext.spring/2.0.15
