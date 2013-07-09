@@ -12,7 +12,7 @@ import org.apache.camel.Processor;
 public class IntegerArrayListAverageProcessor implements Processor {
 
 	@Override
-	public void process(Exchange exchange) throws Exception {		
+	public void process(Exchange exchange) throws ProcessorException {		
 		final Message in = exchange.getIn();
 		final Collection<?> list = in.getBody(AbstractCollection.class);
 		BigDecimal total = BigDecimal.ZERO;

@@ -12,7 +12,7 @@ public class ValueChangedProcessor implements Processor {
 	private long lastChangeTimestamp;
 
 	@Override
-	public void process(Exchange exchange) throws Exception {
+	public void process(Exchange exchange) throws ProcessorException {
 		final long currentTimestamp = Calendar.getInstance().getTimeInMillis();
 		final Message in = exchange.getIn();
 		final Object body = in.getBody();

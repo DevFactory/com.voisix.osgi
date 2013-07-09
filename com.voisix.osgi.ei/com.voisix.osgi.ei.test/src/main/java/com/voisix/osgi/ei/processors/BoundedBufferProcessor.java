@@ -14,13 +14,17 @@ public class BoundedBufferProcessor implements Processor {
 	}
 	
 	@Override
-	public void process(Exchange exchange) throws Exception {
+	public void process(Exchange exchange) throws ProcessorException {
 		final Message in = exchange.getIn();
 		if (buffer.remainingCapacity()==0) {
 			buffer.poll();
 		}
-
-		buffer.put(in.getBody());
-		in.setBody(buffer);
+				
+		try {
+			buffer.put(in.getBody());
+			in.setBody(buffer);
+		} catch (InterruptedException e) {
+			throw new ProcessorException(e);
+		}
 	}
 }
