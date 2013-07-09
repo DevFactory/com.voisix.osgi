@@ -8,6 +8,8 @@ import org.apache.camel.Message;
 import org.apache.camel.impl.DefaultMessage;
 import org.apache.camel.impl.DefaultProducer;
 
+import com.voisix.osgi.ei.components.ProducerException;
+
 public class RandomIntegerProducer extends DefaultProducer {
 	
 	private final Integer range;
@@ -20,7 +22,7 @@ public class RandomIntegerProducer extends DefaultProducer {
 	}
 
 	@Override
-	public void process(Exchange exchange) throws Exception {		
+	public void process(Exchange exchange) throws ProducerException {		
 		final Message out = new DefaultMessage();
 		out.setBody(random.nextInt(range), Integer.class);	
 		exchange.setOut(out);
