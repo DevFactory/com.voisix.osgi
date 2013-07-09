@@ -30,17 +30,15 @@ Apache CXF Features
 ===================
 
 repo-add mvn:org.apache.cxf.karaf/apache-cxf/2.7.3/xml/features
+feature:install -v cxf
 
-feature:install cxf
+# See camel-jackson
+#install -s mvn:org.codehaus.jackson/jackson-core-asl/1.9.12
+#install -s mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.12
+#install -s mvn:org.codehaus.jackson/jackson-jaxrs/1.9.12
+#install -s mvn:org.codehaus.jackson/jackson-xc/1.9.12
 
-install -s mvn:org.codehaus.jackson/jackson-core-asl/1.9.12
-
-install -s mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.12
-
-install -s mvn:org.codehaus.jackson/jackson-jaxrs/1.9.12
-
-install -s mvn:org.codehaus.jackson/jackson-xc/1.9.12
-
+install -s mvn:com.voisix.osgi.examples.cxf/com.voisix.osgi.examples.cxf.jaxrs/1.0.0-SNAPSHOT
 
 Batch Features
 ==============
@@ -86,8 +84,13 @@ feature:install -v camel-script
 feature:install -v camel-script-javascript
 feature:install -v camel-groovy
 feature:install -v camel-script-groovy 
+feature:install -v camel-cxf 
+feature:install -v camel-xstream
+feature:install -v camel-jaxb
+feature:install -v camel-gson
+feature:install -v camel-jackson
+feature:install -v camel-mongodb
 
-#install -s mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.commons-collections/3.2.1_3
 install -s mvn:com.voisix.osgi.ei/com.voisix.osgi.ei.test/1.0.0-SNAPSHOT
 
 PAX-Wicket

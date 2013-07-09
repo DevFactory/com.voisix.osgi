@@ -8,7 +8,6 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 
-
 	<core:bus>
 		<core:features>
 			<core:logging id="log" />

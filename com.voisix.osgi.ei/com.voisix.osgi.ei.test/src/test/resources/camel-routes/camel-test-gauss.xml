@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://camel.apache.org/schema/spring"	
+ 	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring-2.11.0.xsd">
+
+	<camelContext id="camel.test.gauss">
+		<route id="camel.test.gauss" autoStartup="false">
+			<from uri="timer:timer1?fixedRate=true&amp;period=1000" />
+			<to uri="random:integer?range=100" />
+			<to uri="log:random.integer?level=INFO" />
+			<transform>
+				<groovy>Math.pow(2.71828, -Math.pow(request.body - 50, 2) / (2 * Math.pow(50 , 2)))</groovy>
+			</transform>
+			<to uri="log:random.integer.gauss?level=INFO" />
+		</route>
+	</camelContext>
+</beans:beans>

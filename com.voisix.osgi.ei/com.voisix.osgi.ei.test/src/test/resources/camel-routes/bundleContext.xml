@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:camel="http://camel.apache.org/schema/spring"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:core="http://cxf.apache.org/core"
+	xmlns:cxf="http://camel.apache.org/schema/cxf"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
+		http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+		http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core
+		http://cxf.apache.org/transports/camel http://cxf.apache.org/transports/camel.xsd
+		http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf-2.11.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://camel.apache.org/schema/osgi http://camel.apache.org/schema/osgi/camel-osgi-2.0-M1.xsd
+		http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+		http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring-2.0-M1.xsd">
+
+	<bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory"
+		p:brokerURL="tcp://localhost:61616"
+		p:userName="karaf"
+		p:password="karaf"/>
+	
+	<bean id="jmsPooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory"
+		p:maxConnections="10" p:connectionFactory-ref="jmsConnectionFactory"/>	
+		
+	<bean id="jmsConfiguration" class="org.apache.camel.component.jms.JmsConfiguration"
+		p:connectionFactory-ref="jmsPooledConnectionFactory"
+		p:concurrentConsumers="10"/>
+		
+	<bean id="activemqComponent" class="org.apache.activemq.camel.component.ActiveMQComponent"
+		p:configuration-ref="jmsConfiguration"/>	
+	
+	<bean id="jsonObjectProcessor" class="com.voisix.osgi.ei.processors.JSONObjectProcessor"/>
+	
+	<bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider"/>
+	
+	<bean id="jaxrsOutInterceptor" class="org.apache.cxf.jaxrs.interceptor.JAXRSOutInterceptor"/>
+	
+	<bean id="mongoDb" class="com.mongodb.Mongo"/>		
+		 	
+	<cxf:rsServer id="indicatorServiceEndpoint" 
+		address="/indicator"		
+		serviceClass="com.voisix.osgi.ei.webservices.IndicatorServiceImpl"
+		loggingFeatureEnabled="false" 
+		loggingSizeLimit="20" 
+		skipFaultLogging="true">		
+	</cxf:rsServer>
+		
+	<camel:camelContext id="camel.context.jaxrs">
+		<camel:route id="camel.route.jaxrs">
+			<camel:from uri="cxfrs:bean:indicatorServiceEndpoint?bindingStyle=SimpleConsumer"/>
+						
+			<!-- 
+			<camel:filter>
+				<camel:simple><![CDATA[${in.header.content-type} == 'application/json']]></camel:simple>
+				<camel:process ref="jsonObjectProcessor" />					
+			</camel:filter>
+			 -->
+			<camel:to uri="activemq:topic:indicator?disableReplyTo=true&amp;maxConcurrentConsumers=10&amp;includeSentJMSMessageID=true"
+				 pattern="InOnly"/>
+			<camel:transform>
+				<camel:simple>in.header.JMSMessageID</camel:simple>
+			</camel:transform>
+		</camel:route>
+				 
+		
+		<camel:route>
+			<camel:from uri="activemq:topic:indicator?asyncConsumer=true"/>	
+			<camel:to uri="log:jms1?showAll=true&amp;multiline=true"/>					
+		</camel:route>
+		
+		<camel:route id="camel.mongo">
+			<camel:from uri="activemq:topic:indicator?asyncConsumer=true"/>		
+			<camel:to uri="log:json?level=INFO&amp;showAll=true&amp;multiline=true"/>
+			<!--  			
+			<camel:to uri="mongodb:mongoDb?database=indicators&amp;collection=values&amp;operation=insert"/>
+			-->								
+		</camel:route>
+		
+		 
+	</camel:camelContext>	
+</beans>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://camel.apache.org/schema/spring"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring-2.11.0.xsd">
+		
+	<beans:bean id="bufferProcessor" class="com.voisix.osgi.ei.processors.BoundedBufferProcessor" c:capacity="10"/>
+	<beans:bean id="averageProcessor" class="com.voisix.osgi.ei.processors.IntegerArrayListAverageProcessor"/>
+	<beans:bean id="sumProcessor" class="com.voisix.osgi.ei.processors.IntegerArrayListSumProcessor"/>	 
+ 	
+	<camelContext id="camel.test.buffer">
+	
+		<route id="camel.test.buffer" autoStartup="false">
+			<from uri="timer:timer1?fixedRate=true&amp;period=1000" />
+			<to id="random.integer1" uri="random:integer?range=100" />			
+			<process ref="bufferProcessor"/>						
+			<to uri="log:camel.test.buffer?level=INFO" />		
+			<process ref="averageProcessor"/>						
+			<to uri="log:camel.test.buffer.average?level=INFO" />
+			<transform>
+				<javaScript>
+					<![CDATA[
+						if (request.body < 50) {
+							"below 50";
+						} else {
+							"above 50";
+						}				
+					]]>
+				</javaScript>				
+			</transform>
+			<to uri="log:camel.test.buffer.javaScript?level=INFO" />
+		</route>				
+	</camelContext>
+
+</beans:beans>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://camel.apache.org/schema/spring"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring-2.11.0.xsd">
+		
+	<beans:bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory"
+		p:brokerURL="tcp://localhost:61616"
+		p:userName="karaf"
+		p:password="karaf"/>
+	
+	<beans:bean id="jmsPooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory"
+		p:maxConnections="10" p:connectionFactory-ref="jmsConnectionFactory"/>
+		
+	<beans:bean id="jmsConfiguration" class="org.apache.camel.component.jms.JmsConfiguration"
+		p:connectionFactory-ref="jmsPooledConnectionFactory"
+		p:concurrentConsumers="10"/>
+		
+	<beans:bean id="activemqComponent" class="org.apache.activemq.camel.component.ActiveMQComponent"
+		p:configuration-ref="jmsConfiguration"/>
+		
+	<beans:bean id="restletComponent" class="org.restlet.Component" />
+	<beans:bean id="restletComponentService" class="org.apache.camel.component.restlet.RestletComponent">
+		<beans:constructor-arg index="0" ref="restletComponent"/>
+	</beans:bean>
+  
+	<camelContext id="camel.test.restlet">	
+		<route id="camel.test.restlet" autoStartup="false">
+			<from uri="restlet:/indicator/{id}?restletMethod=POST" />
+			<to uri="log:camel.test.restlet?level=INFO" />		
+		</route>
+	</camelContext>
+		
+</beans:beans>

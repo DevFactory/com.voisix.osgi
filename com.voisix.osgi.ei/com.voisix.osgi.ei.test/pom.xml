@@ -15,6 +15,12 @@
 	<build>
 		<plugins>
 			<plugin>
+  				<groupId>org.apache.camel</groupId>
+  				<artifactId>camel-maven-plugin</artifactId>
+  				<version>${camel.version}</version>
+  			</plugin>
+		
+			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
 				<extensions>true</extensions>
@@ -31,6 +37,22 @@
 							org.codehaus.groovy.runtime,
 							org.codehaus.groovy.runtime.callsite,
 							org.codehaus.groovy.reflection,
+							
+							javax.wsdl,
+							javax.xml.bind,
+							javax.xml.bind.annotation,
+							javax.ws.rs,
+							javax.ws.rs.core,
+							
+							org.springframework.beans.factory.config,
+							org.apache.cxf.bus.spring,
+							org.apache.cxf.jaxrs.provider.json,
+							org.apache.cxf.ws.policy,
+							
+							org.codehaus.jackson.jaxrs,
+							org.codehaus.jackson.xc,
+							org.codehaus.jackson.map,
+							
 							*
 						</Import-Package>
 					</instructions>
@@ -67,11 +89,19 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
+			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-spring</artifactId>
+			<version>${camel.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-cxf</artifactId>
 			<version>${camel.version}</version>
 		</dependency>
 
@@ -79,19 +109,23 @@
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-script</artifactId>
 			<version>${camel.version}</version>
+			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-hawtdb</artifactId>
 			<version>${camel.version}</version>
+			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.google.code.scriptengines</groupId>
 			<artifactId>scriptengines-javascript</artifactId>
 			<version>1.1</version>
+			<scope>compile</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-core</artifactId>
@@ -112,12 +146,53 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- JAXRS -->		
 		<dependency>
-			<groupId>org.apache.servicemix.bundles</groupId>
-			<artifactId>org.apache.servicemix.bundles.commons-collections</artifactId>
-			<version>3.2.1_3</version>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxrs</artifactId>			
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-rs-extension-providers</artifactId>			
+		</dependency>	
+
+		<dependency>
+			<groupId>org.apache.servicemix.specs</groupId>
+			<artifactId>org.apache.servicemix.specs.jsr311-api-1.1.1</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.servicemix.specs</groupId>
+			<artifactId>org.apache.servicemix.specs.jaxb-api-2.2</artifactId>
 		</dependency>
 		
+		<!-- JSON Providers -->
+		
+		<!-- Jackson -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-jaxrs</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-xc</artifactId>
+			<version>${jackson.version}</version>			
+		</dependency>
+
+		<!-- Jettison -->
+		<dependency>
+			<groupId>org.codehaus.jettison</groupId>
+			<artifactId>jettison</artifactId>
+			<version>1.3.3</version>
+			<type>bundle</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>2.9.1</version>
+		</dependency>
 	</dependencies>
 
 </project>
