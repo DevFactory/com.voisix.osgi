@@ -22,7 +22,7 @@
 	<name>Voisix OSGI Features</name>
 	<description>A set of Features for Apache Karaf</description>
 	<inceptionYear>2013</inceptionYear>
-	<url>http://jenkins.voisix.com/job/com.voisix.osgi/ws/target/staging/index.html</url>
+	<url>http://jenkins.voisix.com/job/com.voisix.osgi/site</url>
 
 	<organization>
 		<name>Voisix.com</name>
@@ -216,7 +216,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-site-plugin</artifactId>
-					<version>3.3</version>					
+					<version>3.3</version>										
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
