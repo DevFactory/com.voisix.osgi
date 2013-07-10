@@ -47,7 +47,7 @@
 				<executions>
 					<execution>
 						<id>generate-feature</id>
-						<phase>generate-sources</phase>						
+						<phase>generate-resources</phase>						
 						<goals>
 							<goal>features-generate-descriptor</goal>
 						</goals>						
