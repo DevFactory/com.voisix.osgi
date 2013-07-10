@@ -129,8 +129,7 @@
 		<quartz.version>2.1.6_1</quartz.version>
 		<h2.version>1.3.170</h2.version>
 		<restlet-version>2.0.15</restlet-version>
-
-		<!-- Furter used maven plugin versions; e.g. in the docs -->
+		
 		<plugin.depends.version>1.2</plugin.depends.version>
 
 		<!-- General Settings -->
@@ -216,7 +215,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-site-plugin</artifactId>
-					<version>3.3</version>										
+					<version>3.3</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -241,14 +240,27 @@
 						</instructions>
 					</configuration>
 				</plugin>
+				
+				
 				<plugin>
 					<groupId>org.apache.servicemix.tooling</groupId>
 					<artifactId>depends-maven-plugin</artifactId>
 					<version>${plugin.depends.version}</version>
 				</plugin>
+
+				<!-- The Surefire Plugin is used during the test phase of the build lifecycle 
+					to execute the unit tests of an application. -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.15</version>
+				</plugin>
+
+				<!-- The Failsafe Plugin is designed to run integration tests while the 
+					Surefire Plugins is designed to run unit tests. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
 					<version>2.15</version>
 				</plugin>
 			</plugins>
@@ -285,7 +297,7 @@
 				<version>${karaf.version}</version>
 				<type>pom</type>
 			</dependency>
-						 				
+
 			<!-- OSGI -->
 			<dependency>
 				<groupId>org.osgi</groupId>
@@ -726,14 +738,14 @@
 							<report>summary</report>
 							<report>dependency-info</report>
 							<report>modules</report>
-							
+
 							<report>dependencies</report>
-							<report>dependency-management</report>														
+							<report>dependency-management</report>
 							<report>dependency-convergence</report>
-							 
+
 							<report>plugins</report>
 							<report>plugin-management</report>
-														
+
 							<report>scm</report>
 							<report>issue-tracking</report>
 							<report>cim</report>
@@ -751,52 +763,27 @@
 				<artifactId>maven-jxr-plugin</artifactId>
 				<version>2.3</version>
 			</plugin>
-				
-			<!-- The Javadoc Plugin uses the Javadoc tool to generate javadocs for the specified project. -->
-			<!--			
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.9.1</version>				
-			</plugin>			
-			-->
-			 
-			<!-- This plugin is used to inform your users of the changes that have occured between different releases of your project -->
-			<!-- 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-changes-plugin</artifactId>
-				<version>2.9</version>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>github-report</report>							
-							<report>changes-report</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-			 -->  			
+
+			<!-- The Javadoc Plugin uses the Javadoc tool to generate javadocs for 
+				the specified project. -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId> 
+				<version>2.9.1</version> </plugin> -->
+
+			<!-- This plugin is used to inform your users of the changes that have 
+				occured between different releases of your project -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-changes-plugin</artifactId> 
+				<version>2.9</version> <reportSets> <reportSet> <reports> <report>github-report</report> 
+				<report>changes-report</report> </reports> </reportSet> </reportSets> </plugin> -->
 
 			<!-- JDepend Maven Plugin produces a nicely formatted metrics report based 
 				on your project. -->
-			<!-- 					
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jdepend-maven-plugin</artifactId>
-				<version>2.0-beta-2</version>						
-			</plugin> 			 
- 			-->
- 			
+			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>jdepend-maven-plugin</artifactId> 
+				<version>2.0-beta-2</version> </plugin> -->
+
 			<!-- JavaNCSS is a source measurement suite for Java which produces quantity 
 				& complexity metrics for your java source code. -->
-			<!-- 			
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>javancss-maven-plugin</artifactId>
-				<version>2.0</version>
-			</plugin>
-			-->
+			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>javancss-maven-plugin</artifactId> 
+				<version>2.0</version> </plugin> -->
 		</plugins>
 	</reporting>
 
@@ -832,12 +819,12 @@
 			<name>Voisix Snapshot Distribution Repository</name>
 			<url>http://nexus.voisix.com/content/repositories/snapshots/</url>
 		</snapshotRepository>
-		
+
 		<site>
 			<id>com.voisix.osgi</id>
 			<name>${project.name} Site</name>
 			<url>http://jenkins.voisix.com/job/com.voisix.osgi/site</url>
-		</site>			
+		</site>
 	</distributionManagement>
 
 </project>

@@ -1,59 +1,39 @@
 package com.voisix.osgi.jdbc.test;
 
-import static org.apache.karaf.tooling.exam.options.KarafDistributionOption.karafDistributionConfiguration;
 import static org.apache.karaf.tooling.exam.options.KarafDistributionOption.logLevel;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
-import static org.ops4j.pax.exam.CoreOptions.maven;
 import static org.ops4j.pax.exam.CoreOptions.options;
 import static org.ops4j.pax.exam.CoreOptions.scanFeatures;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Hashtable;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.karaf.tooling.exam.options.KarafDistributionBaseConfigurationOption;
 import org.apache.karaf.tooling.exam.options.LogLevelOption.LogLevel;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.Configuration;
-import org.ops4j.pax.exam.junit.ExamReactorStrategy;
-import org.ops4j.pax.exam.junit.JUnit4TestRunner;
-import org.ops4j.pax.exam.spi.reactors.AllConfinedStagedReactorFactory;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.util.tracker.ServiceTracker;
 
-
-@RunWith(JUnit4TestRunner.class)
-@ExamReactorStrategy(AllConfinedStagedReactorFactory.class)
-public class DataSourceManagedServiceFactoryTest {
-	
-	private final Log logger = LogFactory.getLog(getClass());
+public class DataSourceManagedServiceFactoryTest extends AbstractKarafIntegrationTest {
 	
 	@Inject
-	BundleContext bundleContext;
+	private ConfigurationAdmin configurationAdmin;
 	
-	@Inject
-	ConfigurationAdmin configurationAdmin;
+	private final String filter = "(name=commons-dbcp)";
 		
 	@Configuration
-	public static Option[] configuration() {
+	public final Option[] configuration() {
 		return options(
-				getKaraf(),
+				getKarafDistributionBaseConfigurationOption(),
 				scanFeatures("mvn:org.apache.karaf.features/standard/3.0.0.RC1/xml/features", "eventadmin"),	
 				scanFeatures("mvn:org.apache.karaf.features/standard/3.0.0.RC1/xml/features", "spring-dm"),				
 				scanFeatures("mvn:org.apache.karaf.features/spring/3.0.0.RC1/xml/features", "spring-jdbc"),
@@ -77,50 +57,27 @@ public class DataSourceManagedServiceFactoryTest {
 	}
 	
 	@Test
-	public void test2() {			
-		createConfiguration();
+	public void testConfigurationProvision() {			
+		provisionJdbcConfiguration();
+		assertServiceAvailable(DataSource.class, filter, 100000);				
+		testConnection();				
+	}
+	
+	public void testConnection() {
 		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}			
-		test();				
+			final Collection<ServiceReference<DataSource>> dataSourceServiceReferences = bundleContext.getServiceReferences(DataSource.class, filter);
+			final DataSource dataSource = bundleContext.getService(dataSourceServiceReferences.iterator().next());
+			final Connection connection = dataSource.getConnection();
+			logger.info("Successfuly connected to " + connection.getCatalog() );
+			connection.close();			
+		} catch (InvalidSyntaxException e) {
+			Assert.fail(e.getMessage());
+		} catch (SQLException e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
-	//@Test
-	public void test() {			
-		ServiceTracker<DataSource, ServiceRegistration<DataSource>> tracker = new ServiceTracker<DataSource, ServiceRegistration<DataSource>>(bundleContext, DataSource.class, null);
-		tracker.open();
-		int count = tracker.getTrackingCount();
-		logger.info(count);
-		for (ServiceReference<DataSource> serviceReference : tracker.getServiceReferences()) {
-			final DataSource dataSource = bundleContext.getService(serviceReference);		
-			assertNotNull(dataSource);
-			try {
-				final Connection connection = dataSource.getConnection();
-				assertNotNull(connection);				
-				connection.close();
-			} catch (SQLException e) {
-				logger.error(e.getMessage(), e);
-				Assert.fail(e.getMessage());
-			}
-		}
-		tracker.close();			
-	}
-	
-	public static KarafDistributionBaseConfigurationOption getKaraf() {
-		return karafDistributionConfiguration()
-				.frameworkUrl(
-						maven()
-							.groupId("org.apache.karaf")
-							.artifactId("apache-karaf")
-							.type("zip")
-							.versionAsInProject())
-			.name("apache-karaf")
-			.unpackDirectory(new File("target/pax/exam/"));
-	}
-	
-	private final void createConfiguration() {
+	private final void provisionJdbcConfiguration() {
 		try {	
 			org.osgi.service.cm.Configuration configuration = configurationAdmin.createFactoryConfiguration("javax.sql.DataSource", null );
 			Hashtable<String, String> properties = new Hashtable<String, String>();
@@ -135,23 +92,5 @@ public class DataSourceManagedServiceFactoryTest {
 			logger.error(e.getMessage(), e);
 			fail(e.getMessage());
 		}
-	}
-	
-	private void assertBundleActive(String bundleName) {
-		Bundle[] bundles = bundleContext.getBundles();
-		boolean found = false;
-		boolean active = false;
-
-		for (Bundle bundle : bundles) {
-			if (bundle.getSymbolicName().equals(bundleName)) {
-				found = true;
-				if (bundle.getState() == Bundle.ACTIVE) {
-					active = true;
-				}
-				break;
-			}
-		}
-		Assert.assertTrue(bundleName + " not found in container", found);
-		Assert.assertTrue(bundleName + " not active", active);
 	}
 }
