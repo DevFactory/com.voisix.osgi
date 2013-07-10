@@ -22,7 +22,7 @@
 	<name>Voisix OSGI Features</name>
 	<description>A set of Features for Apache Karaf</description>
 	<inceptionYear>2013</inceptionYear>
-	<url>http://jenkins.voisix.com/job/com.voisix.osgi/site</url>
+	<url>http://jenkins.voisix.com/job/com.voisix.osgi/ws/target/staging/index.html</url>
 
 	<organization>
 		<name>Voisix.com</name>
