@@ -1,4 +1,4 @@
-package com.voisix.osgi.ei.components;
+package com.voisix.osgi.ei.exceptions;
 
 public class ProducerException extends Exception {
 	private static final long serialVersionUID = 1L;

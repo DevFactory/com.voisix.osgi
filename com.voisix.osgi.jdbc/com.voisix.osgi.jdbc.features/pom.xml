@@ -32,7 +32,7 @@
 			<plugin>
 				<groupId>org.apache.karaf.tooling</groupId>
 				<artifactId>karaf-maven-plugin</artifactId>
-
+				 
 				<configuration>
 					<startLevel>80</startLevel>
 					<aggregateFeatures>true</aggregateFeatures>
@@ -41,18 +41,19 @@
 					<failOnDependencyChange>false</failOnDependencyChange>
 					<logDependencyChanges>true</logDependencyChanges>
 					<overwriteChangedDependencies>true</overwriteChangedDependencies>
-					<includeTransitiveDependency>false</includeTransitiveDependency>
+					<includeTransitiveDependency>false</includeTransitiveDependency>					
 				</configuration>
-
+ 				
 				<executions>
 					<execution>
 						<id>generate-feature</id>
+						<phase>generate-sources</phase>						
 						<goals>
 							<goal>features-generate-descriptor</goal>
-						</goals>
-						<phase>generate-resources</phase>
+						</goals>						
 					</execution>
 				</executions>
+							
 			</plugin>
 		</plugins>
 	</build>

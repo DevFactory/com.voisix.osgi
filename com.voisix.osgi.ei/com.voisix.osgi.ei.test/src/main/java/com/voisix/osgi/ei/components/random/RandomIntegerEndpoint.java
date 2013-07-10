@@ -6,6 +6,8 @@ import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.impl.DefaultEndpoint;
 
+import com.voisix.osgi.ei.exceptions.EndpointException;
+
 
 public class RandomIntegerEndpoint extends DefaultEndpoint {
 		
@@ -17,12 +19,12 @@ public class RandomIntegerEndpoint extends DefaultEndpoint {
 	}
 
 	@Override
-	public Producer createProducer() throws Exception {		
+	public Producer createProducer() {		
 		return new RandomIntegerProducer(this, range);
 	}
 
 	@Override
-	public Consumer createConsumer(Processor processor) throws Exception {
+	public Consumer createConsumer(Processor processor) {
 		return new RandomIntegerConsumer(this, processor);
 	}
 

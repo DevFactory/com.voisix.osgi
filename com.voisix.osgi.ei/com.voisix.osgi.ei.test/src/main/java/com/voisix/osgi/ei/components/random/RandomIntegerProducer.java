@@ -8,7 +8,7 @@ import org.apache.camel.Message;
 import org.apache.camel.impl.DefaultMessage;
 import org.apache.camel.impl.DefaultProducer;
 
-import com.voisix.osgi.ei.components.ProducerException;
+import com.voisix.osgi.ei.exceptions.ProducerException;
 
 public class RandomIntegerProducer extends DefaultProducer {
 	
@@ -18,11 +18,11 @@ public class RandomIntegerProducer extends DefaultProducer {
 	public RandomIntegerProducer(Endpoint endpoint, Integer range) {
 		super(endpoint);
 		this.range = range;
-		this.random = new Random(System.currentTimeMillis());
+		random = new Random(System.currentTimeMillis());
 	}
 
 	@Override
-	public void process(Exchange exchange) throws ProducerException {		
+	public void process(Exchange exchange) {		
 		final Message out = new DefaultMessage();
 		out.setBody(random.nextInt(range), Integer.class);	
 		exchange.setOut(out);

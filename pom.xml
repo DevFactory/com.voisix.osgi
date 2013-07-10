@@ -15,14 +15,9 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<!-- 
-	<parent>
-		<groupId>org.apache.karaf</groupId>
-		<artifactId>karaf</artifactId>
-		<version>3.0.0.RC1</version>
-	</parent>
- 	 -->
- 	
+	<!-- <parent> <groupId>org.apache.karaf</groupId> <artifactId>karaf</artifactId> 
+		<version>3.0.0.RC1</version> </parent> -->
+
 	<groupId>com.voisix.osgi</groupId>
 	<artifactId>com.voisix.osgi</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
@@ -30,6 +25,7 @@
 	<name>Voisix OSGI Features</name>
 	<description>A set of Features for Apache Karaf</description>
 	<inceptionYear>2013</inceptionYear>
+	<url></url>
 
 	<organization>
 		<name>Voisix.com</name>
@@ -63,8 +59,13 @@
 
 	<issueManagement>
 		<system>GitHub</system>
-		<url>https://github.com/assens/com.voisix.osgi/issues</url>
+		<url>https://github.com/assens/com.voisix.osgi/issues/</url>
 	</issueManagement>
+
+	<ciManagement>
+		<system>Jenkins CI</system>
+		<url>http://jenkins.voisix.com/job/com.voisix.osgi</url>
+	</ciManagement>
 
 	<licenses>
 		<license>
@@ -93,26 +94,24 @@
 
 		<osgi.version>4.3.1</osgi.version>
 		<osgi.compendium.version>4.3.1</osgi.compendium.version>
-		
+
 		<geronimo.jms-spec.version>1.1.1</geronimo.jms-spec.version>
-        <geronimo.jpa-spec.version>1.1</geronimo.jpa-spec.version>
-        <geronimo.jta-spec.version>1.1.1</geronimo.jta-spec.version>
-        <geronimo.annotation-spec.version>1.0.1</geronimo.annotation-spec.version>
-        <geronimo.jaspic-spec.version>1.1</geronimo.jaspic-spec.version>
-		
+		<geronimo.jpa-spec.version>1.1</geronimo.jpa-spec.version>
+		<geronimo.jta-spec.version>1.1.1</geronimo.jta-spec.version>
+		<geronimo.annotation-spec.version>1.0.1</geronimo.annotation-spec.version>
+		<geronimo.jaspic-spec.version>1.1</geronimo.jaspic-spec.version>
+
 		<felix.plugin.version>2.3.7</felix.plugin.version>
 
-		<!-- Spring / Blueprint injections is not working...  
-		<pax.wicket.version>3.0.0-SNAPSHOT</pax.wicket.version>
-		 -->
+		<!-- Spring / Blueprint injections is not working... <pax.wicket.version>3.0.0-SNAPSHOT</pax.wicket.version> -->
 		<pax.wicket.version>2.1.0</pax.wicket.version>
 		<pax.exam.version>2.6.0</pax.exam.version>
 		<pax.logging.version>1.7.0</pax.logging.version>
-		
+
 		<wicket.version>6.5.0</wicket.version>
 
 		<karaf.version>3.0.0.RC1</karaf.version>
-		
+
 		<camel.version>2.11.0</camel.version>
 
 		<servlet.api.version>3.0</servlet.api.version>
@@ -133,9 +132,9 @@
 		<quartz.version>2.1.6_1</quartz.version>
 		<h2.version>1.3.170</h2.version>
 		<restlet-version>2.0.15</restlet-version>
-		
-		 <!-- Furter used maven plugin versions; e.g. in the docs -->
-        <plugin.depends.version>1.2</plugin.depends.version>
+
+		<!-- Furter used maven plugin versions; e.g. in the docs -->
+		<plugin.depends.version>1.2</plugin.depends.version>
 
 		<!-- General Settings -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -220,7 +219,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-site-plugin</artifactId>
-					<version>3.1</version>
+					<version>3.3</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -233,23 +232,23 @@
 					<version>${karaf.version}</version>
 				</plugin>
 				<plugin>
-                    <groupId>org.apache.felix</groupId>
-                    <artifactId>maven-bundle-plugin</artifactId>
-                    <version>${felix.plugin.version}</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <instructions>
-                            <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                            <Export-Package>${project.artifactId}*;version=${project.version}</Export-Package>
-                            <_versionpolicy>${bnd.version.policy}</_versionpolicy>                            
-                        </instructions>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.servicemix.tooling</groupId>
-                    <artifactId>depends-maven-plugin</artifactId>
-                    <version>${plugin.depends.version}</version>
-                </plugin>				
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>${felix.plugin.version}</version>
+					<extensions>true</extensions>
+					<configuration>
+						<instructions>
+							<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+							<Export-Package>${project.artifactId}*;version=${project.version}</Export-Package>
+							<_versionpolicy>${bnd.version.policy}</_versionpolicy>
+						</instructions>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.servicemix.tooling</groupId>
+					<artifactId>depends-maven-plugin</artifactId>
+					<version>${plugin.depends.version}</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 
@@ -381,23 +380,23 @@
 				<artifactId>org.apache.servicemix.bundles.junit</artifactId>
 				<version>${junit.bundle.version}</version>
 			</dependency>
-			
+
 			<!-- Apache Geronimo -->
 			<dependency>
-                <groupId>org.apache.geronimo.specs</groupId>
-                <artifactId>geronimo-jms_1.1_spec</artifactId>
-                <version>${geronimo.jms-spec.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.geronimo.specs</groupId>
-                <artifactId>geronimo-jpa_2.0_spec</artifactId>
-                <version>${geronimo.jpa-spec.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.geronimo.specs</groupId>
-                <artifactId>geronimo-jta_1.1_spec</artifactId>
-                <version>${geronimo.jta-spec.version}</version>
-            </dependency>
+				<groupId>org.apache.geronimo.specs</groupId>
+				<artifactId>geronimo-jms_1.1_spec</artifactId>
+				<version>${geronimo.jms-spec.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.geronimo.specs</groupId>
+				<artifactId>geronimo-jpa_2.0_spec</artifactId>
+				<version>${geronimo.jpa-spec.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.geronimo.specs</groupId>
+				<artifactId>geronimo-jta_1.1_spec</artifactId>
+				<version>${geronimo.jta-spec.version}</version>
+			</dependency>
 
 			<!-- Apache CXF -->
 			<dependency>
@@ -560,7 +559,7 @@
 				<artifactId>slf4j-simple</artifactId>
 				<version>${slf4j.version}</version>
 			</dependency>
-			
+
 			<!-- H2 Database -->
 			<dependency>
 				<groupId>com.h2database</groupId>
@@ -570,101 +569,101 @@
 
 		</dependencies>
 	</dependencyManagement>
-	
-	
+
+
 
 	<repositories>
-	 	<!-- Apache snapshots -->
-        <repository>
-            <id>apache-snapshots</id>
-            <name>Apache Snapshots Repository</name>
-            <url>http://repository.apache.org/content/groups/snapshots-group</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        
-        <!-- ServiceMix repo -->
-        <repository>
-            <id>servicemix</id>
-            <name>Apache ServiceMix Repository</name>
-            <url>http://svn.apache.org/repos/asf/servicemix/m2-repo</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        
-        <repository>
-            <id>sonatype</id>
-            <name>sonatype</name>
-            <url>http://repository.sonatype.org/content/groups/sonatype-public-grid</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        
-        <!-- Fusesource repo -->
-        <repository>
-            <id>fusesource.snapshots</id>
-            <name>FuseSource snapshot repository</name>
-            <url>http://repo.fusesource.com/nexus/content/repositories/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        
-        <!-- OPS4J SNAPSHOT repository -->
-        <repository>
-            <id>ops4j.sonatype.snapshots.deploy</id>
-            <name>OPS4J snapshot repository</name>
-            <url>https://oss.sonatype.org/content/repositories/ops4j-snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        
-        <!-- Gemini Blueprint repository -->
-        <repository>
-            <id>zodiac-repository</id>
-            <name>Zodiac Release Repository</name>
-            <url>http://zodiac.springsource.com/maven/bundles/release</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        
-        <!-- OSSRH snapshots -->
-        <repository>
-            <id>ossrh.sonatype.snapshots.deploy</id>
-            <name>OSSRH snapshot repository</name>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    
-		
+		<!-- Apache snapshots -->
+		<repository>
+			<id>apache-snapshots</id>
+			<name>Apache Snapshots Repository</name>
+			<url>http://repository.apache.org/content/groups/snapshots-group</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+
+		<!-- ServiceMix repo -->
+		<repository>
+			<id>servicemix</id>
+			<name>Apache ServiceMix Repository</name>
+			<url>http://svn.apache.org/repos/asf/servicemix/m2-repo</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+
+		<repository>
+			<id>sonatype</id>
+			<name>sonatype</name>
+			<url>http://repository.sonatype.org/content/groups/sonatype-public-grid</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+
+		<!-- Fusesource repo -->
+		<repository>
+			<id>fusesource.snapshots</id>
+			<name>FuseSource snapshot repository</name>
+			<url>http://repo.fusesource.com/nexus/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+
+		<!-- OPS4J SNAPSHOT repository -->
+		<repository>
+			<id>ops4j.sonatype.snapshots.deploy</id>
+			<name>OPS4J snapshot repository</name>
+			<url>https://oss.sonatype.org/content/repositories/ops4j-snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+
+		<!-- Gemini Blueprint repository -->
+		<repository>
+			<id>zodiac-repository</id>
+			<name>Zodiac Release Repository</name>
+			<url>http://zodiac.springsource.com/maven/bundles/release</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+
+		<!-- OSSRH snapshots -->
+		<repository>
+			<id>ossrh.sonatype.snapshots.deploy</id>
+			<name>OSSRH snapshot repository</name>
+			<url>https://oss.sonatype.org/content/groups/public/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+
+
 
 		<repository>
 			<id>ops4j-snapshots</id>
@@ -692,25 +691,95 @@
 			<name>Restlet repository</name>
 			<url>http://maven.restlet.org</url>
 		</repository>
-		
+
 		<repository>
 			<id>script-engines</id>
 			<name>Script Engines</name>
 			<url>http://scriptengines.googlecode.com/svn/m2-repo</url>
 		</repository>
 	</repositories>
-	
+
 	<reporting>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>2.6</version>
+				<version>2.7</version>
 				<configuration>
 					<dependencyDetailsEnabled>false</dependencyDetailsEnabled>
 					<dependencyLocationsEnabled>false</dependencyLocationsEnabled>
 				</configuration>
-			</plugin>		
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>index</report>
+							<report>summary</report>
+							<report>dependency-info</report>
+							<report>modules</report>
+							
+							<report>dependencies</report>
+							<report>dependency-management</report>														
+							<report>dependency-convergence</report>
+							 
+							<report>plugins</report>
+							<report>plugin-management</report>
+														
+							<report>scm</report>
+							<report>issue-tracking</report>
+							<report>cim</report>
+							<report>distribution-management</report>
+							<report>project-team</report>
+							<report>license</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
+			<!-- XR Plugin produces a cross-reference of the project's sources. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>2.3</version>
+			</plugin>
+				
+			<!-- The Javadoc Plugin uses the Javadoc tool to generate javadocs for the specified project. -->			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>				
+			</plugin>			
+			
+			<!-- This plugin is used to inform your users of the changes that have occured between different releases of your project -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changes-plugin</artifactId>
+				<version>2.9</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<!-- <report>github-report</report> -->							
+							<report>changes-report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>  			
+
+			<!-- JDepend Maven Plugin produces a nicely formatted metrics report based 
+				on your project. -->					
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jdepend-maven-plugin</artifactId>
+				<version>2.0-beta-2</version>						
+			</plugin> 			 
+ 			 
+			<!-- JavaNCSS is a source measurement suite for Java which produces quantity 
+				& complexity metrics for your java source code. -->			
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>javancss-maven-plugin</artifactId>
+				<version>2.0</version>
+			</plugin>
+			 
 		</plugins>
 	</reporting>
 

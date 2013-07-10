@@ -11,9 +11,8 @@ public class JSONObjectProcessor implements Processor {
 	@Override
 	public void process(Exchange exchange) throws ProcessorException {
 		final Message in = exchange.getIn();		
-		JSONObject jsonObject;
 		try {
-			jsonObject = new JSONObject(in.getBody(String.class));
+			final JSONObject jsonObject = new JSONObject(in.getBody(String.class));
 			in.setBody(jsonObject);
 		} catch (JSONException e) {
 			throw new ProcessorException(e);
