@@ -22,7 +22,7 @@
 	<name>Voisix OSGI Features</name>
 	<description>A set of Features for Apache Karaf</description>
 	<inceptionYear>2013</inceptionYear>
-	<url>http://jenkins.voisix.com/job/com.voisix.osgi/site/</url>
+	<url>http://jenkins.voisix.com/job/com.voisix.osgi/site</url>
 
 	<organization>
 		<name>Voisix.com</name>
@@ -827,6 +827,12 @@
 			<name>Voisix Snapshot Distribution Repository</name>
 			<url>http://nexus.voisix.com/content/repositories/snapshots/</url>
 		</snapshotRepository>
+		
+		<site>
+			<id>com.voisix.osgi</id>
+			<name>${project.name} Site</name>
+			<url>http://jenkins.voisix.com/job/com.voisix.osgi/site</url>
+		</site>
 	</distributionManagement>
 
 </project>
