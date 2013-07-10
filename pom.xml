@@ -216,7 +216,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-site-plugin</artifactId>
-					<version>3.3</version>
+					<version>3.3</version>					
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -832,7 +832,7 @@
 			<id>com.voisix.osgi</id>
 			<name>${project.name} Site</name>
 			<url>http://jenkins.voisix.com/job/com.voisix.osgi/site</url>
-		</site>
+		</site>			
 	</distributionManagement>
 
 </project>
