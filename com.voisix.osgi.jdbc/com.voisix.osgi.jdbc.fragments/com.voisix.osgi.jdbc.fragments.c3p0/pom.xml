@@ -10,10 +10,8 @@
 	
 	<groupId>com.voisix.osgi.jdbc.fragments</groupId>
 	<artifactId>com.voisix.osgi.jdbc.fragments.c3p0</artifactId>
-	<packaging>bundle</packaging>
-	
-	<name>JDBC Fragments - c3p0</name>
-	<description>c3p0 ComboPooledDataSource</description>
+	<packaging>bundle</packaging>	
+	<name>Voisix :: JDBC Features :: Fragments :: c3p0 Connection Pool</name>		
 	
 	<build>
 		<plugins>

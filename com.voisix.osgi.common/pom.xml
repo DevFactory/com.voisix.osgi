@@ -12,8 +12,7 @@
 
 	<artifactId>com.voisix.osgi.common</artifactId>
 	<packaging>bundle</packaging>
-
-	<name>Common Interfaces and Abstract Classes</name>
+	<name>Voisix :: Common Interfaces and Abstract Classes</name>
 
 	<build>
 		<plugins>

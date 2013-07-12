@@ -11,9 +11,7 @@
 	<groupId>com.voisix.osgi.jdbc.fragments</groupId>
 	<artifactId>com.voisix.osgi.jdbc.fragments.spring</artifactId>
 	<packaging>bundle</packaging>
-
-	<name>JDBC Fragments - Spring JDBC</name>
-	<description>Spring JDBC SimpleDriverDataSource</description>
+	<name>Voisix :: JDBC Features :: Fragments :: Spring SimpleDriverDataSource</name>	
 
 	<build>
 		<plugins>

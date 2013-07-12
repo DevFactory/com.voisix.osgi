@@ -11,7 +11,7 @@
 	<groupId>com.voisix.osgi.jdbc</groupId>
 	<artifactId>com.voisix.osgi.jdbc.test</artifactId>
 	<packaging>jar</packaging>
-	<name>JDBC DataSource Managed Service Factory</name>
+	<name>Voisix :: JDBC Features :: Integration Test</name>
 
 	<properties>
 		<exam.version>2.6.0</exam.version>

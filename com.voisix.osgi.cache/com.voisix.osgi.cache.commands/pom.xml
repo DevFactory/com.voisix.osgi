@@ -45,6 +45,12 @@
 			<artifactId>org.apache.servicemix.bundles.ehcache</artifactId>
 			<version>${ehcache.version}</version>
 		</dependency>
+		
+		<!-- PAX Logging -->
+		<dependency>
+			<groupId>org.ops4j.pax.logging</groupId>
+			<artifactId>pax-logging-api</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

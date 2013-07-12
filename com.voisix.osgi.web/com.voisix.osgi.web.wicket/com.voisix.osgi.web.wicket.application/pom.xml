@@ -22,29 +22,29 @@
 				<configuration>
 					<instructions>
 						<Import-Package>
-org.osgi.framework,						
-						
-org.apache.wicket,
-org.apache.wicket.ajax,
-org.apache.wicket.util,
-org.apache.wicket.event,
-org.apache.wicket.page,
-org.apache.wicket.request.resource,
-org.apache.wicket.request.mapper,
-org.apache.wicket.request.cycle,
-org.apache.wicket.markup.html,
-org.apache.wicket.markup.html.basic,
-org.apache.wicket.protocol.http,
-org.apache.wicket.request.http,
-org.apache.wicket.settings,
-org.apache.wicket.session,
-org.apache.wicket.util.file,
-org.apache.wicket.request,
-org.apache.wicket.core.request.mapper,
-
-org.ops4j.pax.wicket.api,
-org.ops4j.pax.wicket.util,
-org.ops4j.pax.wicket.util.proxy,
+							org.osgi.framework,						
+													
+							org.apache.wicket,
+							org.apache.wicket.ajax,
+							org.apache.wicket.util,
+							org.apache.wicket.event,
+							org.apache.wicket.page,
+							org.apache.wicket.request.resource,
+							org.apache.wicket.request.mapper,
+							org.apache.wicket.request.cycle,
+							org.apache.wicket.markup.html,
+							org.apache.wicket.markup.html.basic,
+							org.apache.wicket.protocol.http,
+							org.apache.wicket.request.http,
+							org.apache.wicket.settings,
+							org.apache.wicket.session,
+							org.apache.wicket.util.file,
+							org.apache.wicket.request,
+							org.apache.wicket.core.request.mapper,
+							
+							org.ops4j.pax.wicket.api,
+							org.ops4j.pax.wicket.util,
+							org.ops4j.pax.wicket.util.proxy,
 											
 							net.sf.cglib.proxy;version="[2,3)",
 							net.sf.cglib.core;version="[2,3)",
@@ -63,5 +63,10 @@ org.ops4j.pax.wicket.util.proxy,
 		</plugins>
 	</build>
 
-	
+	<dependencies>
+		<dependency>
+			<groupId>org.ops4j.pax.logging</groupId>
+			<artifactId>pax-logging-api</artifactId>			
+		</dependency>
+	</dependencies>
 </project>

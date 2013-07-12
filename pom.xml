@@ -263,6 +263,12 @@
 					<artifactId>maven-failsafe-plugin</artifactId>
 					<version>2.15</version>
 				</plugin>
+				
+				<plugin>
+					<groupId>org.kuali.maven.plugins</groupId>
+					<artifactId>graph-maven-plugin</artifactId>
+					<version>1.2.3</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 
@@ -284,6 +290,19 @@
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
 				<inherited>true</inherited>
+			</plugin>
+			<plugin>
+				<groupId>org.kuali.maven.plugins</groupId>
+				<artifactId>graph-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>pre-site</phase>
+						<id>dependency-graph</id>
+						<goals>
+							<goal>multi</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -463,6 +482,12 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
 				<version>${spring31.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>					
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -755,6 +780,16 @@
 						</reports>
 					</reportSet>
 				</reportSets>
+			</plugin>
+
+			<plugin>
+				<groupId>org.kuali.maven.plugins</groupId>
+				<artifactId>graph-maven-plugin</artifactId>				
+				<configuration>
+					<conflicts>SHOW</conflicts>
+					<depth>2</depth>
+					<keepDotFile>true</keepDotFile>
+				</configuration>
 			</plugin>
 
 			<!-- XR Plugin produces a cross-reference of the project's sources. -->

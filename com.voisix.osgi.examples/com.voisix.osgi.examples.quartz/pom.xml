@@ -122,6 +122,12 @@
 			<artifactId>org.apache.servicemix.bundles.quartz</artifactId>
 			<version>${quartz.version}</version>
 		</dependency>
+				
+		<!-- PAX Logging -->
+		<dependency>
+			<groupId>org.ops4j.pax.logging</groupId>
+			<artifactId>pax-logging-api</artifactId>
+		</dependency>
 
 	</dependencies>
 </project>

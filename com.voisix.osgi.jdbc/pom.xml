@@ -9,7 +9,7 @@
 	
 	<artifactId>com.voisix.osgi.jdbc</artifactId>
 	<packaging>pom</packaging>
-	<name>JDBC Features</name>
+	<name>Voisix :: JDBC Features</name>
 	
 	<modules>
 		<module>com.voisix.osgi.jdbc.factory</module>

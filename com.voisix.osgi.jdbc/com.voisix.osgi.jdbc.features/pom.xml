@@ -25,7 +25,7 @@
 	<artifactId>com.voisix.osgi.jdbc.features</artifactId>
 	<packaging>pom</packaging>
 
-	<name>JDBC Features Assembly</name>
+	<name>Voisix :: JDBC Features :: Deploy Assembly</name>
 
 	<build>
 		<plugins>
