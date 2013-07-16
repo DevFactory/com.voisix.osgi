@@ -94,8 +94,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ops4j.pax.logging</groupId>
-			<artifactId>pax-logging-api</artifactId>
-			<type>bundle</type>
+			<artifactId>pax-logging-api</artifactId>			
 		</dependency>
 	</dependencies>
 
