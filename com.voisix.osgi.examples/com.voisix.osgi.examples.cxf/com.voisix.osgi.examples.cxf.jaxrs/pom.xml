@@ -92,6 +92,11 @@
 			<version>${logback.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.ops4j.pax.logging</groupId>
+			<artifactId>pax-logging-api</artifactId>
+			<type>bundle</type>
+		</dependency>
 	</dependencies>
 
 	<build>
