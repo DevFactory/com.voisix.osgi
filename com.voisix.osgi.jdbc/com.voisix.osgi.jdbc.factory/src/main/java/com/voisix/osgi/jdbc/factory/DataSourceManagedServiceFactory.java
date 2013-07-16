@@ -16,9 +16,9 @@ import com.voisix.osgi.common.AbstractManagedServiceFactory;
 
 public class DataSourceManagedServiceFactory extends AbstractManagedServiceFactory<DataSource> {
 		
-	private final static String FACTORY_CLASS 	= "factoryClass";
-	private final static String DRIVER_CLASS	= "driverClass";
-	private final static String SPRING_JDBC_FACTORY_CLASS_NAME = "org.springframework.jdbc.datasource.SimpleDriverDataSource";
+	private static final String FACTORY_CLASS 	= "factoryClass";
+	private static final String DRIVER_CLASS	= "driverClass";
+	private static final String SPRING_JDBC_FACTORY_CLASS_NAME = "org.springframework.jdbc.datasource.SimpleDriverDataSource";
 	
 	public DataSourceManagedServiceFactory(List<String> serviceInterfaces) {
 		super(serviceInterfaces);

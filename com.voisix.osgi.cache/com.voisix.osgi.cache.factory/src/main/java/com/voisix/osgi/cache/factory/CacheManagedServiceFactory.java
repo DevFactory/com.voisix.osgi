@@ -18,15 +18,15 @@ import org.springframework.cache.ehcache.EhCacheCacheManager;
 import com.voisix.osgi.common.AbstractManagedServiceFactory;
 
 
-public class CacheManagedServiceFactory extends AbstractManagedServiceFactory<Ehcache> {
-	
+public final class CacheManagedServiceFactory extends AbstractManagedServiceFactory<Ehcache> {
+
 	private EhCacheCacheManager ehCacheManager;
 
 	public CacheManagedServiceFactory(List<String> serviceInterfaces) {
 		super(serviceInterfaces);
 	}
 	
-	private final CacheConfiguration createCacheConfiguration(Dictionary<String, ?> properties) {
+	private CacheConfiguration createCacheConfiguration(Dictionary<String, ?> properties) {
 		final CacheConfiguration cacheConfiguration = new CacheConfiguration();
 		final BeanWrapper beanWrapper 	= PropertyAccessorFactory.forBeanPropertyAccess(cacheConfiguration);
 		final MutablePropertyValues propertyValues = getPropertyValues(properties);
@@ -36,12 +36,12 @@ public class CacheManagedServiceFactory extends AbstractManagedServiceFactory<Eh
 
 	@Override
 	protected Ehcache createService(String pid, Dictionary<String, ?> properties)  {
-		final CacheManager cacheManager = ehCacheManager.getCacheManager();
+		final CacheManager cacheManager = getEhCacheManager().getCacheManager();
 		final CacheConfiguration cacheConfiguration = createCacheConfiguration(properties);		
 		final Cache cache = new Cache(cacheConfiguration);
 		cache.setCacheManager(cacheManager);
 		cacheManager.addCacheIfAbsent(cache);		
-		ehCacheManager.afterPropertiesSet();
+		getEhCacheManager().afterPropertiesSet();
 		return cache;
 	}
 
@@ -51,7 +51,7 @@ public class CacheManagedServiceFactory extends AbstractManagedServiceFactory<Eh
 		final BeanWrapper beanWrapper 	= PropertyAccessorFactory.forBeanPropertyAccess(cacheConfiguration);
 		final MutablePropertyValues propertyValues = getPropertyValues(properties);
 		beanWrapper.setPropertyValues(propertyValues, true);			
-		ehCacheManager.afterPropertiesSet();
+		getEhCacheManager().afterPropertiesSet();
 		logger.info("Updated: " + cache);			
 	}
 	
@@ -59,8 +59,8 @@ public class CacheManagedServiceFactory extends AbstractManagedServiceFactory<Eh
 	protected void deleteService(Ehcache cache) {
 		final CacheManager cacheManager = ehCacheManager.getCacheManager();		
 		cacheManager.removeCache(cache.getName());
-		ehCacheManager.getCacheNames().remove(cache.getName());
-		ehCacheManager.afterPropertiesSet();
+		getEhCacheManager().getCacheNames().remove(cache.getName());
+		getEhCacheManager().afterPropertiesSet();
 	}
 
 	public EhCacheCacheManager getEhCacheManager() {

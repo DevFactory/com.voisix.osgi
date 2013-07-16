@@ -130,8 +130,6 @@
 		<h2.version>1.3.170</h2.version>
 		<restlet-version>2.0.15</restlet-version>
 		
-		<plugin.depends.version>1.2</plugin.depends.version>
-
 		<!-- General Settings -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<bnd.version.policy>[$(version;==;$(@)),$(version;+;$(@)))</bnd.version.policy>
@@ -152,81 +150,74 @@
 	<build>
 		<pluginManagement>
 			<plugins>
+				<!-- Core plugins -->
+				
+				<!-- Compiles Java sources. -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>2.5.1</version>
+					<version>3.1</version>
 				</plugin>
+				
+				<!-- Copy the resources to the output directory for including in the JAR. -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
-					<version>2.5</version>
+					<version>2.6</version>
 				</plugin>
+				
+				<!-- Deploy the built artifact to the remote repository. -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>2.7</version>
 				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-enforcer-plugin</artifactId>
-					<version>1.1</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-gpg-plugin</artifactId>
-					<version>1.4</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.8.1</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
-					<version>2.4</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-remote-resources-plugin</artifactId>
-					<version>1.3</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-install-plugin</artifactId>
-					<version>2.3.1</version>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>exec-maven-plugin</artifactId>
-					<version>1.2.1</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-dependency-plugin</artifactId>
-					<version>2.4</version>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>build-helper-maven-plugin</artifactId>
-					<version>1.7</version>
-				</plugin>
+				
+				<!-- Generate a site for the current project. -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-site-plugin</artifactId>
 					<version>3.3</version>
 				</plugin>
+				
+				<!-- Install the built artifact into the local repository. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				
+				<!-- Run the JUnit unit tests in an isolated classloader. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.15</version>
+				</plugin>
+
+				<!-- Run the JUnit integration tests in an isolated classloader. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>2.15</version>
+				</plugin>
+				
+				<!-- Packaging tools  -->
+				
+				<!-- Build a JAR from the current project. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				
+				<!-- Build a WAR from the current project. -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
-					<version>2.2</version>
+					<version>2.4</version>
 				</plugin>
-				<plugin>
-					<groupId>org.apache.karaf.tooling</groupId>
-					<artifactId>karaf-maven-plugin</artifactId>
-					<version>${karaf.version}</version>
-				</plugin>
+				
+				<!-- Create an OSGi bundle -->
 				<plugin>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>maven-bundle-plugin</artifactId>
@@ -241,33 +232,78 @@
 					</configuration>
 				</plugin>
 				
-				
+				<!-- Create Apache Karaf assembly -->
 				<plugin>
-					<groupId>org.apache.servicemix.tooling</groupId>
-					<artifactId>depends-maven-plugin</artifactId>
-					<version>${plugin.depends.version}</version>
-				</plugin>
-
-				<!-- The Surefire Plugin is used during the test phase of the build lifecycle 
-					to execute the unit tests of an application. -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.15</version>
-				</plugin>
-
-				<!-- The Failsafe Plugin is designed to run integration tests while the 
-					Surefire Plugins is designed to run unit tests. -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-failsafe-plugin</artifactId>
-					<version>2.15</version>
+					<groupId>org.apache.karaf.tooling</groupId>
+					<artifactId>karaf-maven-plugin</artifactId>
+					<version>${karaf.version}</version>
 				</plugin>
 				
+				<!-- Reporting Plugins -->
+				
+				<!-- Generate Javadoc for the project. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.9</version>
+				</plugin>
+				
+				<!-- Create customizable dependency graphs for Maven projects using Graphviz -->
 				<plugin>
 					<groupId>org.kuali.maven.plugins</groupId>
 					<artifactId>graph-maven-plugin</artifactId>
 					<version>1.2.3</version>
+				</plugin>
+				
+				<!-- Tools plugins -->
+				
+				<!-- Environmental constraint checking (Maven Version, JDK etc) -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>1.3</version>
+				</plugin>
+				
+				<!-- Create signatures for the artifacts and poms. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.4</version>
+				</plugin>
+				
+				<!-- Copy remote resources to the output directory for inclusion in the artifact. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-remote-resources-plugin</artifactId>
+					<version>1.4</version>
+				</plugin>
+				
+				<!-- Dependency manipulation (copy, unpack) and analysis. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>2.8</version>
+				</plugin>
+				
+				<!-- Еxecute system and Java programs. -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>1.2.1</version>
+				</plugin>
+				
+				<!-- Аssist with the Maven build lifecycle. -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.8</version>
+				</plugin>
+
+				<!-- produces a classes/META-INF/maven/dependencies.properties file with the project dependencies -->
+				<plugin>
+					<groupId>org.apache.servicemix.tooling</groupId>
+					<artifactId>depends-maven-plugin</artifactId>
+					<version>1.2</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

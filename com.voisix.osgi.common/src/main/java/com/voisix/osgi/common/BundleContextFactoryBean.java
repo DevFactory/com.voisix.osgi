@@ -5,10 +5,11 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.osgi.context.BundleContextAware;
 
 public class BundleContextFactoryBean implements BundleContextAware, FactoryBean<BundleContext> {
+	
 	private BundleContext bundleContext;
 	
 	@Override
-	public BundleContext getObject() throws Exception {
+	public BundleContext getObject() {
 		return bundleContext;
 	}
 

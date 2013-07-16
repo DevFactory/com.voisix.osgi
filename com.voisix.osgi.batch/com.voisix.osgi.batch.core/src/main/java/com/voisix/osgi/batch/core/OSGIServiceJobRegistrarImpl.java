@@ -11,7 +11,7 @@ import org.springframework.batch.core.configuration.support.ReferenceJobFactory;
 
 public class OSGIServiceJobRegistrarImpl implements OSGIServiceJobRegistrar {
 	
-	private final static Logger logger = Logger.getLogger(OSGIServiceJobRegistrar.class.getName());
+	private final Logger logger = Logger.getLogger(OSGIServiceJobRegistrar.class.getName());
 	
 	private JobRegistry jobRegistry;
 	

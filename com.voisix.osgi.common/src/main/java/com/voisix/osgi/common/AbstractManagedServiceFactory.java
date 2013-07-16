@@ -28,7 +28,7 @@ public abstract class AbstractManagedServiceFactory<T> implements BundleContextA
     
     protected final Log logger = LogFactory.getLog(getClass());
     
-    final List<String> serviceInterfaces;
+    private final List<String> serviceInterfaces;
     private final Set<String> eventTopics = new HashSet<String>();
     
     private EventAdmin eventAdmin;
@@ -90,7 +90,7 @@ public abstract class AbstractManagedServiceFactory<T> implements BundleContextA
 		this.bundleContext = bundleContext;
 	}
 	
-	private final Dictionary<String, Object> getServiceProperties(ServiceReference<T> serviceReference) {
+	private Dictionary<String, Object> getServiceProperties(ServiceReference<T> serviceReference) {
 		final Dictionary<String, Object> properties = new Hashtable<String, Object>();
 		for (String key : serviceReference.getPropertyKeys()) {
 			properties.put(key, serviceReference.getProperty(key));
@@ -110,8 +110,7 @@ public abstract class AbstractManagedServiceFactory<T> implements BundleContextA
 	protected final T getService(String pid) {
 		final ServiceRegistration<T> serviceRegistration = serviceRegistrationMap.get(pid);
 		final ServiceReference<T> serviceReference = serviceRegistration.getReference();			
-		final T service = bundleContext.getService(serviceReference);
-		return service;
+		return bundleContext.getService(serviceReference);		
 	}
 	
 	protected abstract T 	createService(String pid, Dictionary<String, ?> properties) throws ConfigurationException;
@@ -126,7 +125,7 @@ public abstract class AbstractManagedServiceFactory<T> implements BundleContextA
 		this.eventAdmin = eventAdmin;
 	}
 	
-	private final void fireEvent(EventType type, Dictionary<String, ?> properties)  {
+	private void fireEvent(EventType type, Dictionary<String, ?> properties)  {
 		if (eventAdmin!=null) {
 			for (String topic : getEventTopics()) {
 				topic = topic + "/" + type.toString();
@@ -139,5 +138,4 @@ public abstract class AbstractManagedServiceFactory<T> implements BundleContextA
 	public Set<String> getEventTopics() {
 		return eventTopics;
 	}
-	
 }

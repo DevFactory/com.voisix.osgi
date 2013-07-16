@@ -3,28 +3,36 @@ package com.voisix.osgi.cache.factory;
 import java.lang.reflect.Field;
 import java.util.Collection;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
 
 
-public class CustomEhCacheCacheManager extends EhCacheCacheManager {
+public final class CustomEhCacheCacheManager extends EhCacheCacheManager {
 	
+	private static final String FIELD_CACHE_NAMES = "cacheNames";
+	private final Log logger = LogFactory.getLog(getClass());
+	
+	/**
+	 * Override AbstractCacheManager#getCacheNames() to return a modifiable collection
+	 * @see org.springframework.cache.support.AbstractCacheManager#getCacheNames()
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<String> getCacheNames() {
 		try {
-			Class<?> abstractCacheManagerClass = this.getClass().getSuperclass().getSuperclass();			
-			Field field = abstractCacheManagerClass.getDeclaredField("cacheNames");
+			final Class<?> abstractCacheManagerClass = this.getClass().getSuperclass().getSuperclass();			
+			final Field field = abstractCacheManagerClass.getDeclaredField(FIELD_CACHE_NAMES);
 			field.setAccessible(true);
-			return (Collection<String>) field.get(this);
-		
+			return (Collection<String>) field.get(this);		
 		} catch (SecurityException e) {		
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		} catch (IllegalArgumentException e) {
-			e.printStackTrace();		
+			logger.error(e.getMessage(), e);
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return super.getCacheNames();
 	}
