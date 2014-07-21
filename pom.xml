@@ -748,8 +748,6 @@
 			</snapshots>
 		</repository>
 
-
-
 		<repository>
 			<id>ops4j-snapshots</id>
 			<name>Ops4j Snapshots</name>

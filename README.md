@@ -95,9 +95,8 @@ install -s mvn:com.voisix.osgi.ei/com.voisix.osgi.ei.test/1.0.0-SNAPSHOT
 
 PAX-Wicket
 ==========
-
-feature:repo-add mvn:org.ops4j.pax.wicket/features/3.0.0-SNAPSHOT/xml/features
-feature:repo-add mvn:org.ops4j.pax.wicket.samples/features/3.0.0-SNAPSHOT/xml/features
+feature:repo-add mvn:org.ops4j.pax.wicket/paxwicket/3.0.1/xml/features
+feature:repo-add mvn:org.ops4j.pax.wicket/features/3.0.1/xml/features
 
 feature:install -v wicket
 feature:install -v pax-wicket

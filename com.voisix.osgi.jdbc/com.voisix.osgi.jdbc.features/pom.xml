@@ -41,7 +41,32 @@
 					<failOnDependencyChange>false</failOnDependencyChange>
 					<logDependencyChanges>true</logDependencyChanges>
 					<overwriteChangedDependencies>true</overwriteChangedDependencies>
-					<includeTransitiveDependency>false</includeTransitiveDependency>					
+					<includeTransitiveDependency>false</includeTransitiveDependency>
+					<repositories>
+						<repository>
+							<id>releases.voisix.com</id>
+							<name>Voisix Release Distribution Repository</name>
+							<url>http://nexus.voisix.com/content/repositories/releases/</url>
+							<releases>
+								<enabled>true</enabled>
+							</releases>
+							<snapshots>
+								<enabled>false</enabled>
+							</snapshots>
+						</repository>
+					
+						<repository>
+							<id>snapshots.voisix.com</id>
+							<name>Voisix Snapshot Distribution Repository</name>
+							<url>http://nexus.voisix.com/content/repositories/snapshots/</url>
+							<releases>
+								<enabled>false</enabled>
+							</releases>
+							<snapshots>
+								<enabled>true</enabled>
+							</snapshots>
+						</repository>
+					</repositories>					
 				</configuration>
  				
 				<executions>
